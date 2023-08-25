@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.fengshch:mybatis-flex-gradle-plugin:+'
+//        classpath "org.postgresql:postgresql:42.6.0"
+        classpath 'com.mysql:mysql-connector-j:8.1.0'
+        classpath 'org.flywaydb:flyway-mysql:9.21.2'
+    }
+}
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.1.2'
+    id 'io.spring.dependency-management' version '1.1.2'
+}
+apply {
+    plugin 'com.github.fengshch.mybatis-flex-gradle-plugin'
+}
+group = 'example'
+version = 'unspecified'
+java {
+    sourceCompatibility = '17'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+//dataSourceConfig{
+//    driverClassName = 'com.mysql.cj.jdbc.Driver'
+//    url = 'jdbc:mysql://172.16.12.216:3306/ssia?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT'
+//    username = 'bill'
+//    password = '123456'
+//}
+mybatis{
+    configurations{
+        main {
+            controllerGenerateEnable = true
+            packageConfig {
+                sourceDir = 'src/batis/java'
+                basePackage = 'com.example.mybatis'
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.mybatis-flex:mybatis-flex-spring-boot-starter:1.5.8'
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//    testImplementation platform('org.junit:junit-bom:5.9.1')
+//    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+//tasks.named("bootRun").configure {
+//    systemProperty("spring.profiles.active",findProperty("spring.profiles.active")?:'dev')
+//}
