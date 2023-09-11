@@ -16,9 +16,9 @@ import java.nio.file.Files;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
- * A simple unit test for the 'com.github.fengshch.mybatis.greeting' plugin.
+ * A simple unit test for the 'com.github.fengshch.mybatis.MyBatisFlexGradlePlugin' plugin.
  */
-class MybatisFlexGradlePluginTest {
+class MyBatisFlexGradlePluginTest {
     @TempDir
     public File testProjectDir;
 

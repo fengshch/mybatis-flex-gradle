@@ -46,17 +46,17 @@ public class StrategyConfigBuilder {
     /**
      * 生成哪些表，白名单。
      */
-    private String generateTables;
+    private String[] generateTables;
 
     /**
      * 不生成哪些表，黑名单。
      */
-    private String unGenerateTables;
+    private String[] unGenerateTables;
 
     /**
      * 需要忽略的列 全局配置。
      */
-    private String ignoreColumns;
+    private String[] ignoreColumns;
 
     public void build(GlobalConfig globalConfig) {
         StrategyConfig strategyConfig = globalConfig.getStrategyConfig();
@@ -74,13 +74,13 @@ public class StrategyConfigBuilder {
             strategyConfig.setGenerateSchema(generateSchema);
         }
         if (generateTables != null) {
-            strategyConfig.setGenerateTables(Set.of(generateTables.split(",")));
+            strategyConfig.setGenerateTables(Set.of(generateTables));
         }
         if (unGenerateTables != null) {
-            strategyConfig.setUnGenerateTables(Set.of(unGenerateTables.split(",")));
+            strategyConfig.setUnGenerateTables(Set.of(unGenerateTables));
         }
         if (ignoreColumns != null) {
-            strategyConfig.setIgnoreColumns(ignoreColumns.split(","));
+            strategyConfig.setIgnoreColumns(ignoreColumns);
         }
     }
 }

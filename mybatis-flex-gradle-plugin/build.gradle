@@ -20,18 +20,15 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.mybatis-flex:mybatis-flex-codegen:1.5.7'
+    implementation 'com.mybatis-flex:mybatis-flex-codegen:1.6.4'
 
-    implementation "gradle.plugin.org.flywaydb:gradle-plugin-publishing:9.21.2"
+    implementation "gradle.plugin.org.flywaydb:gradle-plugin-publishing:9.22.0"
 
     implementation 'com.mysql:mysql-connector-j:8.1.0'
 
     implementation("com.zaxxer:HikariCP:5.0.1")
-//    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
-//    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
 
     implementation("org.yaml:snakeyaml:2.1")
-//    implementation("org.yaml:snakeyaml:1.33")
 
     implementation("org.freemarker:freemarker:2.3.32")
 
@@ -40,20 +37,17 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.28")
     testCompileOnly("org.projectlombok:lombok:1.18.28")
 
-//    annotationProcessor(libs.lombok)
     annotationProcessor("org.projectlombok:lombok:1.18.28")
-    // Use JUnit Jupiter for testing.
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 gradlePlugin {
-    // Define the plugin
     plugins {
         greeting {
             id = 'com.github.fengshch.mybatis-flex-gradle-plugin'
-            implementationClass = 'com.github.fengshch.mybatis.MybatisFlexGradlePlugin'
+            implementationClass = 'com.github.fengshch.mybatis.MyBatisFlexGradlePlugin'
         }
     }
 }

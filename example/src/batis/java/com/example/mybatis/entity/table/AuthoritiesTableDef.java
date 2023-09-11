@@ -7,7 +7,7 @@ import com.mybatisflex.core.table.TableDef;
  *  表定义层。
  *
  * @author bill
- * @since 2023-08-25
+ * @since 2023-09-11
  */
 public class AuthoritiesTableDef extends TableDef {
 

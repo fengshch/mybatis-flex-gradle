@@ -8,7 +8,7 @@ import com.example.mybatis.entity.Employees;
  *  映射层。
  *
  * @author bill
- * @since 2023-08-25
+ * @since 2023-09-11
  */
 @Mapper
 public interface EmployeesMapper extends BaseMapper<Employees> {

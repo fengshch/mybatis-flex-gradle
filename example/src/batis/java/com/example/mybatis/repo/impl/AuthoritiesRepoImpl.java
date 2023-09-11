@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  *  服务层实现。
  *
  * @author bill
- * @since 2023-08-25
+ * @since 2023-09-11
  */
 @Service
 public class AuthoritiesRepoImpl extends ServiceImpl<AuthoritiesMapper, Authorities> implements AuthoritiesRepo {

@@ -45,7 +45,7 @@ public class ControllerConfigBuilder {
                 Class<?> aClass = Class.forName(superClass);
                 controllerConfig.setSuperClass(aClass);
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                throw new RuntimeException("superClass not found: " + superClass);
             }
         }
         controllerConfig.setOverwriteEnable(overwriteEnable);

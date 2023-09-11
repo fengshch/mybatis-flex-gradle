@@ -3,8 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mybatis-flex-gradle-plugin/mybatis-flex-gradle-plugin.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mybatis-flex-gradle-plugin/mybatis-flex-gradle-plugin.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.main.iml" filepath="$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.test.iml" filepath="$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.test.iml" />
     </modules>
   </component>
 </project>

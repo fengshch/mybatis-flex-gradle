@@ -8,6 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 public class EntityConfigBuilder {
     /**
+     * Entity 类的前缀。
+     */
+    private String classPrefix = "";
+    /**
      * Entity 类的后缀。
      */
     private String classSuffix = "";
@@ -52,13 +56,21 @@ public class EntityConfigBuilder {
      */
     private String dataSource;
 
-    public void build(GlobalConfig globalConfig) throws ClassNotFoundException {
+    public void build(GlobalConfig globalConfig) {
         EntityConfig entityConfig = globalConfig.getEntityConfig();
+        if(StringUtils.isNotBlank(classPrefix))
+            entityConfig.setClassPrefix(classPrefix);
+
         if (StringUtils.isNotBlank(classSuffix))
             entityConfig.setClassSuffix(classSuffix);
 
         if (StringUtils.isNotBlank(superClass)) {
-            Class<?> aClass = Class.forName(superClass);
+            Class<?> aClass = null;
+            try {
+                aClass = Class.forName(superClass);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("superClass not found: " + superClass + "!");
+            }
             entityConfig.setSuperClass(aClass);
         }
 
@@ -69,7 +81,12 @@ public class EntityConfigBuilder {
             Class<?>[] classes = new Class[array.length];
             for (int i = 0; i < array.length; i++) {
                 String implInterface = array[i];
-                Class<?> aClass = Class.forName(implInterface);
+                Class<?> aClass = null;
+                try {
+                    aClass = Class.forName(implInterface);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException("implInterface not found: " + implInterface + "!");
+                }
                 classes[i] = aClass;
             }
             entityConfig.setImplInterfaces(classes);

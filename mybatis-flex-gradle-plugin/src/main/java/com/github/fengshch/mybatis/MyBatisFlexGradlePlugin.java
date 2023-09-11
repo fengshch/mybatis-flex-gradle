@@ -9,14 +9,13 @@ import com.github.fengshch.mybatis.ext.MyBatisExtension;
 import com.github.fengshch.mybatis.tasks.*;
 import org.apache.commons.lang3.StringUtils;
 import org.flywaydb.gradle.FlywayExtension;
-import org.flywaydb.gradle.FlywayPlugin;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
-import org.gradle.api.tasks.TaskProvider;
+import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
@@ -27,23 +26,17 @@ import java.util.*;
 /**
  * A simple 'hello world' plugin.
  */
-public class MybatisFlexGradlePlugin implements Plugin<Project> {
+public class MyBatisFlexGradlePlugin implements Plugin<Project> {
     public void apply(Project project) {
         project.getPlugins().apply(JavaBasePlugin.class);
 
         MyBatisExtension myBatisExtension = project.getExtensions().create("mybatis", MyBatisExtension.class);
-         project.getExtensions().create("flyway", FlywayExtension.class);
+        project.getExtensions().create("flyway", FlywayExtension.class);
 
         project.afterEvaluate(p -> {
             System.out.println("mybatis: " + myBatisExtension.getConfigurations().getNames());
             myBatisExtension.getConfigurations().forEach(globalConfigBuilder -> {
-                if (globalConfigBuilder.getDataSourceConfig() == null) {
-                    try {
-                        globalConfigBuilder.setDataSourceConfig(configDatasource(project, globalConfigBuilder.getName()));
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
+                configDatasource(project, globalConfigBuilder);
                 createGenerateTask(project, globalConfigBuilder);
 
                 project.getPlugins().withType(JavaBasePlugin.class, javaBasePlugin -> {
@@ -52,12 +45,12 @@ public class MybatisFlexGradlePlugin implements Plugin<Project> {
 
                     if (sourceSets.getNames().contains("main")) {
                         SourceSet sourceSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
-                        String batisSourceSetJavaDir = globalConfigBuilder.getPackageConfig().getSourceDir();
+                        String batisSourceSetJavaDir = globalConfigBuilder.getPackageConfigBuilder().getSourceDir();
                         sourceSet.getJava().srcDir(batisSourceSetJavaDir);
                     }
                 });
 
-                FlywayExtension flywayExtension = globalConfigBuilder.getFlywayConfigBuilder().build(project);
+                FlywayExtension flywayExtension = globalConfigBuilder.getFlywayExtension();
                 applyFlywayTask(project, globalConfigBuilder, flywayExtension);
             });
         });
@@ -70,17 +63,11 @@ public class MybatisFlexGradlePlugin implements Plugin<Project> {
     }
 
     @SuppressWarnings("unchecked")
-    private DataSourceConfigBuilder configDatasource(Project project, String configName) throws IOException {
-        DataSourceConfigBuilder dataSourceConfig = new DataSourceConfigBuilder();
+    private void configDatasource(Project project, GlobalConfigBuilder globalConfigBuilder) {
+        DataSourceConfigBuilder dataSourceConfig = globalConfigBuilder.getDataSourceConfigBuilder();
+        String configName = globalConfigBuilder.getName();
 
-
-        Map<String, String> pathsMap = new HashMap<>();
-        pathsMap.put("src/main/resources/mybatis.yml", "mybatis");
-        pathsMap.put("src/main/resources/application-dev.yml", "spring");
-        pathsMap.put("src/main/resources/application.yml", "spring");
-        pathsMap.put("src/main/resources/application-test.yml", "spring");
-        pathsMap.put("src/main/resources/mybatis.properties", "mybatis.datasource");
-        pathsMap.put("src/main/resources/application.properties", "spring.datasource");
+        Map<String, String> pathsMap = getStringStringMap();
 
         for (Map.Entry<String, String> entry : pathsMap.entrySet()) {
             File configFile = project.file(entry.getKey());
@@ -104,13 +91,29 @@ public class MybatisFlexGradlePlugin implements Plugin<Project> {
                     }
                 } else {
                     String prefix = "main".equals(configName) ? entry.getValue() : entry.getValue() + "." + configName;
-                    Properties properties = loadProperties(configFile);
+                    Properties properties = null;
+                    try {
+                        properties = loadProperties(configFile);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     setConfigFromProperties(dataSourceConfig, properties, prefix);
                 }
                 break; // exit the loop once the first matching config file is found and processed
             }
         }
-        return dataSourceConfig;
+    }
+
+    @NotNull
+    private static Map<String, String> getStringStringMap() {
+        Map<String, String> pathsMap = new HashMap<>();
+        pathsMap.put("src/main/resources/mybatis.yml", "mybatis");
+        pathsMap.put("src/main/resources/application-dev.yml", "spring");
+        pathsMap.put("src/main/resources/application.yml", "spring");
+        pathsMap.put("src/main/resources/application-test.yml", "spring");
+        pathsMap.put("src/main/resources/mybatis.properties", "mybatis.datasource");
+        pathsMap.put("src/main/resources/application.properties", "spring.datasource");
+        return pathsMap;
     }
 
     private HashMap<String, Object> loadYaml(File file) {
