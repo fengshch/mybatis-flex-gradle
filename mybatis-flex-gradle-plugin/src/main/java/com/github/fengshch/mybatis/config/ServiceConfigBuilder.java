@@ -8,6 +8,10 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 public class ServiceConfigBuilder {
     /**
+     * 代码生成目录，当未配置时，使用 PackageConfig 的配置
+     */
+    private String sourceDir;
+    /**
      * Service 类的前缀。
      */
     private String classPrefix = "";
@@ -21,7 +25,7 @@ public class ServiceConfigBuilder {
     /**
      * 自定义 Service 的父类。
      */
-    private String superClass;
+    private String superClass = "com.mybatisflex.core.service.IService";
 
     /**
      * 是否覆盖之前生成的文件。
@@ -30,6 +34,11 @@ public class ServiceConfigBuilder {
 
     public void build(GlobalConfig globalConfig) {
         ServiceConfig serviceConfig = globalConfig.getServiceConfig();
+
+        if(StringUtils.isNotBlank(sourceDir)){
+            serviceConfig.setSourceDir(sourceDir);
+        }
+
         if (StringUtils.isNotBlank(classPrefix)) {
             serviceConfig.setClassPrefix(classPrefix);
         }

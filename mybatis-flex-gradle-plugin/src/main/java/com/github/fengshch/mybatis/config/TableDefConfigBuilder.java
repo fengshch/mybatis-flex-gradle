@@ -7,6 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 
 @Data
 public class TableDefConfigBuilder {
+
+    /**
+     * 代码生成目录，当未配置时，使用 PackageConfig 的配置
+     */
+    private String sourceDir;
     /**
      * TableDef 类的前缀。
      */
@@ -34,6 +39,11 @@ public class TableDefConfigBuilder {
 
     public void build(GlobalConfig globalConfig){
         TableDefConfig tableDefConfig = globalConfig.getTableDefConfig();
+
+        if(StringUtils.isNotBlank(sourceDir)){
+            tableDefConfig.setSourceDir(sourceDir);
+        }
+
         if(StringUtils.isNotBlank(classPrefix)){
             tableDefConfig.setClassPrefix(classPrefix);
         }

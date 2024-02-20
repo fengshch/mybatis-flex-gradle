@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  *  服务层实现。
  *
  * @author bill
- * @since 2023-09-11
+ * @since 2024-02-20
  */
 @Service
 public class ProductRepoImpl extends ServiceImpl<ProductMapper, Product> implements ProductRepo {

@@ -7,6 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 
 @Data
 public class ServiceImplConfigBuilder {
+
+    /**
+     * 代码生成目录，当未配置时，使用 PackageConfig 的配置
+     */
+    private String sourceDir;
     /**
      * ServiceImpl 类的前缀。
      */
@@ -32,15 +37,20 @@ public class ServiceImplConfigBuilder {
      */
     private boolean cacheExample = false;
 
-    public void build(GlobalConfig globalConfig){
+    public void build(GlobalConfig globalConfig) {
         ServiceImplConfig serviceImplConfig = globalConfig.getServiceImplConfig();
-        if(StringUtils.isNotBlank(classPrefix)){
+
+        if (StringUtils.isNotBlank(sourceDir)) {
+            serviceImplConfig.setSourceDir(sourceDir);
+        }
+
+        if (StringUtils.isNotBlank(classPrefix)) {
             serviceImplConfig.setClassPrefix(classPrefix);
         }
-        if(StringUtils.isNotBlank(classSuffix)){
+        if (StringUtils.isNotBlank(classSuffix)) {
             serviceImplConfig.setClassSuffix(classSuffix);
         }
-        if(StringUtils.isNotBlank(superClass)){
+        if (StringUtils.isNotBlank(superClass)) {
             try {
                 Class<?> aClass = Class.forName(superClass);
                 serviceImplConfig.setSuperClass(aClass);

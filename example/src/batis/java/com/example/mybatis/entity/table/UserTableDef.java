@@ -3,13 +3,18 @@ package com.example.mybatis.entity.table;
 import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.table.TableDef;
 
+import java.io.Serial;
+
 /**
  *  表定义层。
  *
  * @author bill
- * @since 2023-09-11
+ * @since 2024-02-20
  */
 public class UserTableDef extends TableDef {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     /**
      * 

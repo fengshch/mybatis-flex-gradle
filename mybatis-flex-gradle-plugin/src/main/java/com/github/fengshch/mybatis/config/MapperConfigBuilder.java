@@ -7,6 +7,11 @@ import org.apache.commons.lang3.StringUtils;
 
 @Data
 public class MapperConfigBuilder {
+
+    /**
+     * 代码生成目录，当未配置时，使用 PackageConfig 的配置
+     */
+    private String sourceDir;
     /**
      * Mapper 类的前缀。
      */
@@ -20,7 +25,7 @@ public class MapperConfigBuilder {
     /**
      * 自定义 Mapper 的父类。
      */
-    private String superClass;
+    private String superClass = "com.mybatisflex.core.BaseMapper";
 
     /**
      * 是否覆盖之前生成的文件。
@@ -34,6 +39,10 @@ public class MapperConfigBuilder {
 
     public void build(GlobalConfig globalConfig) {
         MapperConfig mapperConfig = globalConfig.getMapperConfig();
+
+        if (StringUtils.isNotBlank(sourceDir)) {
+            mapperConfig.setSourceDir(sourceDir);
+        }
         if (StringUtils.isNotBlank(classPrefix)) {
             mapperConfig.setClassPrefix(classPrefix);
         }

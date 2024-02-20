@@ -8,10 +8,16 @@
 plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
+    id 'maven-publish'
 }
 
 group GROUP
 version VERSION
+
+java {
+    sourceCompatibility = '21'
+}
+
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -20,25 +26,25 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.mybatis-flex:mybatis-flex-codegen:1.6.4'
+    implementation 'com.mybatis-flex:mybatis-flex-codegen:1.7.9'
 
-    implementation "gradle.plugin.org.flywaydb:gradle-plugin-publishing:9.22.0"
+    implementation "gradle.plugin.org.flywaydb:gradle-plugin-publishing:10.8.1"
 
-    implementation 'com.mysql:mysql-connector-j:8.1.0'
+    implementation 'com.mysql:mysql-connector-j:8.3.0'
 
-    implementation("com.zaxxer:HikariCP:5.0.1")
+    implementation("com.zaxxer:HikariCP:5.1.0")
 
-    implementation("org.yaml:snakeyaml:2.1")
+    implementation("org.yaml:snakeyaml:2.2")
 
     implementation("org.freemarker:freemarker:2.3.32")
 
-    implementation 'org.apache.commons:commons-lang3:3.13.0'
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
 
-    compileOnly("org.projectlombok:lombok:1.18.28")
-    testCompileOnly("org.projectlombok:lombok:1.18.28")
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    testCompileOnly("org.projectlombok:lombok:1.18.30")
 
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -78,4 +84,25 @@ tasks.named('check') {
 tasks.named('test') {
     // Use JUnit Jupiter for unit tests.
     useJUnitPlatform()
+}
+java {
+//    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = "mybatis-flex-gradle-plugin"
+            from(components.java)
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+            }
+        }
+    }
 }

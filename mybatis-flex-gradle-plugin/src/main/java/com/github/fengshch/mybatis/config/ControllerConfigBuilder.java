@@ -3,10 +3,20 @@ package com.github.fengshch.mybatis.config;
 import com.mybatisflex.codegen.config.ControllerConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ *  Config controller config
+ */
 @Data
+@NoArgsConstructor
 public class ControllerConfigBuilder {
+    /**
+     *代码生成目录，当未配置时，使用 PackageConfig 的配置
+     */
+    private String sourceDir;
+
     /**
      * Controller 类的前缀。
      */
@@ -34,6 +44,11 @@ public class ControllerConfigBuilder {
 
     public void build(GlobalConfig globalConfig) {
         ControllerConfig controllerConfig = globalConfig.getControllerConfig();
+
+        if (StringUtils.isNotBlank(sourceDir)) {
+            controllerConfig.setSourceDir(sourceDir);
+        }
+
         if (StringUtils.isNotBlank(classPrefix)) {
             controllerConfig.setClassPrefix(classPrefix);
         }

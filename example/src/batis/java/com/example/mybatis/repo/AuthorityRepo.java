@@ -7,7 +7,7 @@ import com.example.mybatis.entity.Authority;
  *  服务层。
  *
  * @author bill
- * @since 2023-09-11
+ * @since 2024-02-20
  */
 public interface AuthorityRepo extends IService<Authority> {
 
