@@ -41,10 +41,10 @@ class MyBatisFlexGradlePluginTest {
                             configurations{
                                 main {
                                     dataSourceConfig{
-                                        driverClassName = 'org.postgresql.Driver'
-                                        url = 'jdbc:postgresql://localhost:5432/postgres'
-                                        username = 'postgres'
-                                        password = '123456'
+                                        driverClassName = 'org.h2.Driver'
+                                        url = 'jdbc:h2:mem:testDb'
+                                        username = 'sa'
+                                        password = 'password'
                                      }
                                     packageConfig{
                                         sourceDir ="src/main/java"

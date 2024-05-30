@@ -1,32 +1,37 @@
 package com.example.mybatis.mapper;
 
-import com.example.mybatis.entity.Product;
-import com.example.mybatis.entity.table.ProductTableDef;
+import com.example.mybatis.entity.Products;
+import com.example.mybatis.entity.table.ProductsTableDef;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
+import javax.sql.DataSource;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 @Slf4j
-//@ActiveProfiles("test")
+@ActiveProfiles("dev")
 class ProductMapperTest {
 
     @Autowired
-    ProductMapper productMapper;
+    ProductsMapper productsMapper;
+
+    @Autowired
+    DataSource dataSource;
 
     @Test
     void testQuery() {
         QueryWrapper queryWrapper = QueryWrapper.create()
-                .select(ProductTableDef.PRODUCT.ALL_COLUMNS)
-                .from(ProductTableDef.PRODUCT);
-        List<Product> products = productMapper.selectListByQuery(queryWrapper);
+                .select(ProductsTableDef.PRODUCTS.ALL_COLUMNS)
+                .from(ProductsTableDef.PRODUCTS);
+        List<Products> products = productsMapper.selectListByQuery(queryWrapper);
         log.info("products: {}", products);
-        assertTrue(products.size() > 0);
+        assertFalse(products.isEmpty());
     }
 }

@@ -27,16 +27,16 @@ public class StrategyConfigBuilder {
     /**
      * 是否生成视图映射。
      */
-    private boolean generateForView = false;
+    private boolean generateForView;
 
-//    /**
-//     * 单独为某张表添加独立的配置。
-//     */
+    /**
+     * 单独为某张表添加独立的配置。
+     */
 //    private Map<String, TableConfig> tableConfigMap;
-//
-//    /**
-//     * 设置某个列的全局配置。
-//     */
+
+    /**
+     * 设置某个列的全局配置。
+     */
 //    private Map<String, ColumnConfig> columnConfigMap;
 
     /**
@@ -57,6 +57,8 @@ public class StrategyConfigBuilder {
      * 需要忽略的列 全局配置。
      */
     private String[] ignoreColumns;
+
+
 
     public void build(GlobalConfig globalConfig) {
         StrategyConfig strategyConfig = globalConfig.getStrategyConfig();

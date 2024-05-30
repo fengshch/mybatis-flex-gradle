@@ -18,6 +18,11 @@ public class ControllerConfigBuilder {
     private String sourceDir;
 
     /**
+     *  RequestMapping注解，访问路径的前缀。
+     */
+    private String requestMappingPrefix;
+
+    /**
      * Controller 类的前缀。
      */
     private String classPrefix = "";
@@ -47,6 +52,10 @@ public class ControllerConfigBuilder {
 
         if (StringUtils.isNotBlank(sourceDir)) {
             controllerConfig.setSourceDir(sourceDir);
+        }
+
+        if (StringUtils.isNotBlank(requestMappingPrefix)) {
+            controllerConfig.setRequestMappingPrefix(requestMappingPrefix);
         }
 
         if (StringUtils.isNotBlank(classPrefix)) {

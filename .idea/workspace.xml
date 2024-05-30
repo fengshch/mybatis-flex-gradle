@@ -4,81 +4,137 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="884da1de-73fd-4365-8c09-0de1d3381cc9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.main.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+    <list default="true" id="da7077e1-2ef6-42a7-a0d1-c911697a3792" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1562befb-5b72-47be-ba24-6684dfe3e043.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1562befb-5b72-47be-ba24-6684dfe3e043/storage_v2/_src_/database/DEMO.4_UfAA.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources/1562befb-5b72-47be-ba24-6684dfe3e043/storage_v2/_src_/database/DEMO.4_UfAA/schema/PUBLIC.aaZQjQ.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/demo.mv.db" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/OrdersTableDef.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/ProductsTableDef.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/ProductsRepoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/src/main/resources/db/migration/V1.01__Schema.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/example/src/main/resources/db/migration/V1.02__Data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/libs.versions.toml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.main.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/example/mybatis-flex-gradle.example.test.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/example/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/AuthoritiesController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/AuthorityController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/EmployeesController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/ProductController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/ProductsController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/TokensController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/UsersController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/package-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Authorities.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/OrdersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/UsersController.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/UsersController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/controller/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Authorities.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Orders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Authority.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Employees.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Employees.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Products.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Product.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Tokens.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Users.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/package-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Users.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/Users.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/package-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/AuthoritiesTableDef.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/AuthorityTableDef.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/EmployeesTableDef.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/ProductTableDef.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/TokensTableDef.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/UserTableDef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/UsersTableDef.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/package-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/UsersTableDef.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/UsersTableDef.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/entity/table/package-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/AuthoritiesMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/AuthorityMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/EmployeesMapper.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/ProductMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/TokensMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/UserMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/UsersMapper.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/package-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/TokensMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/OrdersMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/ProductsMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/UsersMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/UsersMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/package-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/AuthoritiesMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/AuthorityMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/EmployeesMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/ProductMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/ProductMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/ProductsMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/TokensMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/UserMapper.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/UsersMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/mapper/xml/OrdersMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/AuthoritiesRepo.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/AuthorityRepo.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/EmployeesRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/ProductRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/ProductRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/ProductsRepo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/TokensRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/UserRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/UsersRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/UserRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/OrdersRepo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/UsersRepo.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/UsersRepo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/AuthoritiesRepoImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/AuthorityRepoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/AuthorityRepoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/OrdersRepoImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/EmployeesRepoImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/ProductRepoImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/TokensRepoImpl.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/UserRepoImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/UsersRepoImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/package-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/package-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/UsersRepoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/UsersRepoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/impl/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/package-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/batis/java/com/example/mybatis/repo/package-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/main/resources/application-dev.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/main/resources/db/flyway/V1.01__Schema.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/main/resources/db/flyway/V1.02__Data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/test/java/com/example/mybatis/mapper/ProductMapperTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/test/java/com/example/mybatis/mapper/ProductMapperTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/test/java/com/example/mybatis/repo/ProductRepoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/test/java/com/example/mybatis/repo/ProductRepoTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/src/test/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/test/resources/application-test.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/functionalTest/com/github/fengshch/mybatis/MyBatisFlexGradlePluginFunctionalTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/MyBatisFlexGradlePlugin.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/ControllerConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/DataSourceConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/EntityConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/FlywayConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/GlobalConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/JavadocConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/MapperConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/MapperXmlConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/PackageConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/ServiceConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/ServiceImplConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/StrategyConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/TableConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/TableDefConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/config/TemplateConfigBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/ext/MyBatisExtension.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayBaselineTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayCleanTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayInfoTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayMigrateTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayRepairTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayUndoTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/CustomFlywayValidateTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/main/com/github/fengshch/mybatis/tasks/MyBatisGenerateTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/test/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/bin/test/com/github/fengshch/mybatis/MyBatisFlexGradlePluginTest.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/MyBatisFlexGradlePlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/MyBatisFlexGradlePlugin.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/ControllerConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/ControllerConfigBuilder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/EntityConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/EntityConfigBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/MapperConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/MapperConfigBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/ServiceConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/ServiceConfigBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/ServiceImplConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/ServiceImplConfigBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/TableDefConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/TableDefConfigBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/GlobalConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/GlobalConfigBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/JavadocConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/JavadocConfigBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/StrategyConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/StrategyConfigBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/TableConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/config/TableConfigBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/tasks/MyBatisGenerateTask.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/main/java/com/github/fengshch/mybatis/tasks/MyBatisGenerateTask.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/test/java/com/github/fengshch/mybatis/MyBatisFlexGradlePluginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/test/java/com/github/fengshch/mybatis/MyBatisFlexGradlePluginTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/test/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/mybatis-flex-gradle-plugin/src/test/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,10 +149,13 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$">
+        <task path="$PROJECT_DIR$/example">
           <activation />
         </task>
-        <task path="$PROJECT_DIR$/example">
+        <task path="$PROJECT_DIR$/example -Pdev">
+          <activation />
+        </task>
+        <task path="$PROJECT_DIR$">
           <activation />
         </task>
         <projects_view>
@@ -114,42 +173,6 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle" type="2d1252cf:ModuleNode" />
-                <item name="example" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle" type="2d1252cf:ModuleNode" />
-                <item name="example" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle" type="2d1252cf:ModuleNode" />
-                <item name="example" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="mybatis" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle" type="2d1252cf:ModuleNode" />
-                <item name="example" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle" type="2d1252cf:ModuleNode" />
-                <item name="example" type="2d1252cf:ModuleNode" />
-                <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
                 <item name="mybatis-flex-gradle-plugin" type="2d1252cf:ModuleNode" />
               </path>
               <path>
@@ -157,34 +180,6 @@
                 <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
                 <item name="mybatis-flex-gradle-plugin" type="2d1252cf:ModuleNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle-plugin" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle-plugin" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build setup" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle-plugin" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="mybatis-flex-gradle" type="f1a62948:ProjectNode" />
-                <item name="mybatis-flex-gradle-plugin" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="plugin development" type="c8890929:TasksNode$1" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
@@ -203,44 +198,43 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="LLMProjectSettings">
-    <option name="turned_on" value="false" />
-  </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
-  </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
 }</component>
-  <component name="ProjectId" id="2ZnXNGBEZS61Gd5LfgdZo4XNiSp" />
+  <component name="ProjectId" id="2h5EnBb0RCkWPELvPhb7w4I93u3" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
     "Gradle.Download Sources.executor": "Run",
-    "Gradle.ProductMapperTest.testQuery.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "Gradle.ProductMapperTest.testQuery.executor": "Debug",
+    "Gradle.mybatis-flex-gradle:example [flywayMigrate].executor": "Debug",
+    "Gradle.mybatis-flex-gradle:example [mybatisGenerate] (1).executor": "Debug",
+    "Gradle.mybatis-flex-gradle:example [mybatisGenerate].executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/bill/jexamples/mybatis/spring",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "h2"
+    ]
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.ProductMapperTest.testQuery">
+  <component name="RunManager" selected="Gradle.mybatis-flex-gradle:example [mybatisGenerate] (1)">
     <configuration name="ProductMapperTest.testQuery" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -265,6 +259,72 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="mybatis-flex-gradle:example [flywayMigrate]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/example" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="flywayMigrate" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="mybatis-flex-gradle:example [mybatisGenerate] (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/example" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="mybatisGenerate" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="mybatis-flex-gradle:example [mybatisGenerate]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/example -Pdev" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="mybatisGenerate" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="mybatis-flex-gradle.example.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.mybatis.MainApplication" />
@@ -274,45 +334,72 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.mybatis-flex-gradle:example [mybatisGenerate] (1)" />
         <item itemvalue="Gradle.ProductMapperTest.testQuery" />
+        <item itemvalue="Gradle.mybatis-flex-gradle:example [mybatisGenerate]" />
+        <item itemvalue="Gradle.mybatis-flex-gradle:example [flywayMigrate]" />
       </list>
     </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-temurin-21.0.2-4caba194b151-51f4b930" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
       </set>
     </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="884da1de-73fd-4365-8c09-0de1d3381cc9" name="Changes" comment="" />
-      <created>1703058774280</created>
+      <changelist id="da7077e1-2ef6-42a7-a0d1-c911697a3792" name="Changes" comment="" />
+      <created>1716875703288</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1703058774280</updated>
-      <workItem from="1703058775302" duration="3775000" />
-      <workItem from="1703062628932" duration="1372000" />
-      <workItem from="1703064008799" duration="67000" />
-      <workItem from="1703064084250" duration="991000" />
-      <workItem from="1703139513652" duration="5000" />
-      <workItem from="1703149199213" duration="603000" />
-      <workItem from="1703210836524" duration="1216000" />
-      <workItem from="1703481792071" duration="12000" />
-      <workItem from="1703493244775" duration="15000" />
-      <workItem from="1703555796149" duration="4000" />
-      <workItem from="1708398019641" duration="682000" />
-      <workItem from="1708398706723" duration="8375000" />
+      <updated>1716875703288</updated>
+      <workItem from="1716875704969" duration="4914000" />
+      <workItem from="1716882631892" duration="477000" />
+      <workItem from="1716883078767" duration="1735000" />
+      <workItem from="1716884707580" duration="702000" />
+      <workItem from="1716889400597" duration="443000" />
+      <workItem from="1716889851674" duration="81000" />
+      <workItem from="1716889987921" duration="284000" />
+      <workItem from="1716946707636" duration="2520000" />
+      <workItem from="1716951055519" duration="788000" />
+      <workItem from="1716952095723" duration="1708000" />
+      <workItem from="1716959589269" duration="17958000" />
+      <workItem from="1717032485191" duration="74000" />
+      <workItem from="1717032577511" duration="13267000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="XSLT-Support.FileAssociations.UIState">
-    <expand />
-    <select />
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/example/src/test/java/com/example/mybatis/mapper/ProductMapperTest.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/8.7/generated-gradle-jars/gradle-api-8.7.jar!/org/gradle/internal/impldep/org/h2/jdbc/JdbcDatabaseMetaData.class</url>
+          <line>78</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mybatis-flex/mybatis-flex-codegen/1.8.9/cb1be612010cca2d5956645898b6c2c00c1213f1/mybatis-flex-codegen-1.8.9-sources.jar!/com/mybatisflex/codegen/Generator.java</url>
+          <line>81</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mybatis-flex/mybatis-flex-codegen/1.8.9/cb1be612010cca2d5956645898b6c2c00c1213f1/mybatis-flex-codegen-1.8.9-sources.jar!/com/mybatisflex/codegen/Generator.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

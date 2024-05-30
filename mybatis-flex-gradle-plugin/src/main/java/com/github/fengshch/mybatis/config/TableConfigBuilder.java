@@ -31,18 +31,19 @@ public class TableConfigBuilder {
     /**
      * 监听 entity 的 insert 行为。
      */
-    private Class<? extends InsertListener> insertListenerClass;
-
+//    private Class<? extends InsertListener> insertListenerClass;
+    private String insertListenerClassName;
     /**
      * 监听 entity 的 update 行为。
      */
-    private Class<? extends UpdateListener> updateListenerClass;
+//    private Class<? extends UpdateListener> updateListenerClass;
+    private String updateListenerClassName;
 
     /**
      * 监听 entity 的查询数据的 set 行为。
      */
-    private Class<? extends SetListener> setListenerClass;
-
+//    private Class<? extends SetListener> setListenerClass;
+    private String setListenerClassName;
     /**
      * 是否开启 Mapper 生成。
      */
@@ -53,9 +54,23 @@ public class TableConfigBuilder {
      */
     private Map<String, ColumnConfig> columnConfigMap;
 
-    public void build(GlobalConfig globalConfig, String name){
-        this.tableName = name;
+    public void build(GlobalConfig globalConfig) throws ClassNotFoundException {
         TableConfig tableConfig = globalConfig.getTableConfigMap().get(tableName);
+
+        if (schema != null) {
+            tableConfig.setSchema(schema);
+        }
+
+        Class<? extends InsertListener> insertListenerClass = Class.forName(insertListenerClassName).asSubclass(InsertListener.class);
+        Class<? extends UpdateListener> updateListenerClass = Class.forName(updateListenerClassName).asSubclass(UpdateListener.class);
+        Class<? extends SetListener> setListenerClass = Class.forName(setListenerClassName).asSubclass(SetListener.class);
+
+        tableConfig.setInsertListenerClass(insertListenerClass);
+        tableConfig.setUpdateListenerClass(updateListenerClass);
+        tableConfig.setSetListenerClass(setListenerClass);
+        tableConfig.setMapperGenerateEnable(mapperGenerateEnable);
+        tableConfig.setColumnConfigMap(columnConfigMap);
+
     }
 
 }

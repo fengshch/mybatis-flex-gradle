@@ -15,6 +15,7 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
+import org.gradle.internal.file.FileMetadata;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
@@ -22,6 +23,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
+
+import static org.gradle.internal.file.impl.DefaultFileMetadata.file;
 
 /**
  * A simple 'hello world' plugin.
@@ -64,42 +67,38 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
 
     @SuppressWarnings("unchecked")
     private void configDatasource(Project project, GlobalConfigBuilder globalConfigBuilder) {
+        String profile = "default";
+        if (project.hasProperty("profile"))
+            profile = (String) project.property("profile");
+        else if (getActiveProfile(project) != null) {
+            profile = getActiveProfile(project);
+        } else if (System.getenv("PROFILE") != null) {
+            profile = System.getenv("PROFILE");
+        }
+
+
         DataSourceConfigBuilder dataSourceConfig = globalConfigBuilder.getDataSourceConfigBuilder();
         String configName = globalConfigBuilder.getName();
 
         Map<String, String> pathsMap = getStringStringMap();
-
-        for (Map.Entry<String, String> entry : pathsMap.entrySet()) {
-            File configFile = project.file(entry.getKey());
-
-            if (configFile.exists()) {
-                if (entry.getKey().endsWith(".yml")) {
-                    Map<String, Object> props = loadYaml(configFile);
-                    if (props == null)
-                        continue;
-                    Map<String, Object> mainConfig = (Map<String, Object>) props.get(entry.getValue());
-                    if (mainConfig == null)
-                        continue;
-                    Map<String, Object> datasource = (Map<String, Object>) mainConfig.get("datasource");
-                    if (datasource == null)
-                        continue;
-                    if ("main".equals(configName)) {
-                        setConfigFromMap(dataSourceConfig, datasource);
-                    } else {
-                        Map<String, Object> datasourceMap = (Map<String, Object>) datasource.get(configName);
-                        setConfigFromMap(dataSourceConfig, datasourceMap);
-                    }
-                } else {
-                    String prefix = "main".equals(configName) ? entry.getValue() : entry.getValue() + "." + configName;
-                    Properties properties = null;
-                    try {
-                        properties = loadProperties(configFile);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    setConfigFromProperties(dataSourceConfig, properties, prefix);
-                }
-                break; // exit the loop once the first matching config file is found and processed
+        String configFileName = pathsMap.get(profile);
+        File configFile = project.file(configFileName);
+        if (configFile.exists()) {
+            Map<String, Object> props = loadYaml(configFile);
+            if (props == null)
+                return;
+            Map<String, Object> mainConfig = (Map<String, Object>) props.get("spring");
+            if (mainConfig == null)
+                return;
+            Map<String, Object> datasource = (Map<String, Object>) mainConfig.get("datasource");
+            if (datasource == null)
+                return;
+            datasource = modifyDatasource(datasource, project);
+            if ("main".equals(configName)) {
+                setConfigFromMap(dataSourceConfig, datasource);
+            } else {
+                Map<String, Object> datasourceMap = (Map<String, Object>) datasource.get(configName);
+                setConfigFromMap(dataSourceConfig, datasourceMap);
             }
         }
     }
@@ -107,12 +106,9 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
     @NotNull
     private static Map<String, String> getStringStringMap() {
         Map<String, String> pathsMap = new HashMap<>();
-        pathsMap.put("src/main/resources/mybatis.yml", "mybatis");
-        pathsMap.put("src/main/resources/application-dev.yml", "spring");
-        pathsMap.put("src/main/resources/application.yml", "spring");
-        pathsMap.put("src/main/resources/application-test.yml", "spring");
-        pathsMap.put("src/main/resources/mybatis.properties", "mybatis.datasource");
-        pathsMap.put("src/main/resources/application.properties", "spring.datasource");
+        pathsMap.put("default", "src/main/resources/application.yml");
+        pathsMap.put("dev", "src/main/resources/application-dev.yml");
+        pathsMap.put("test", "src/main/resources/application-test.yml");
         return pathsMap;
     }
 
@@ -147,7 +143,8 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         config.setPassword(properties.getProperty(prefix + ".password"));
     }
 
-    private void applyFlywayTask(Project project, GlobalConfigBuilder globalConfigBuilder, FlywayExtension flywayExtension) {
+    private void applyFlywayTask(Project project, GlobalConfigBuilder globalConfigBuilder, FlywayExtension
+            flywayExtension) {
         String taskNamePri = globalConfigBuilder.getName().equals("main") ? "flyway" : globalConfigBuilder.getName();
         project.getTasks().register(taskNamePri + "Clean", CustomFlywayCleanTask.class, flywayExtension);
         project.getTasks().create(taskNamePri + "Baseline", CustomFlywayBaselineTask.class, flywayExtension);
@@ -156,5 +153,36 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         project.getTasks().create(taskNamePri + "Validate", CustomFlywayValidateTask.class, flywayExtension);
         project.getTasks().create(taskNamePri + "Info", CustomFlywayInfoTask.class, flywayExtension);
         project.getTasks().create(taskNamePri + "Repair", CustomFlywayRepairTask.class, flywayExtension);
+    }
+
+    @SuppressWarnings("unchecked")
+    private String getActiveProfile(Project project) {
+        File yamlFile = project.file("src/main/resources/application.yml");
+        if (yamlFile.exists()) {
+            Map<String, Object> props = loadYaml(yamlFile);
+            if (props != null) {
+                Map<String, Object> spring = (Map<String, Object>) props.get("spring");
+                if (spring == null) return null;
+                Map<String, Object> profiles = (Map<String, Object>) spring.get("profiles");
+                if (profiles != null) return (String) profiles.get("active");
+            }
+        }
+        return null;
+    }
+
+    private Map<String, Object>  modifyDatasource(Map<String, Object> datasource,Project project ){
+        if (datasource == null)
+           return null;
+        String url = (String) datasource.get("url");
+        if(url.contains("jdbc:h2:file:./")){
+            String path = project.getProjectDir().getAbsolutePath();
+            url = url.replace("jdbc:h2:file:./", "jdbc:h2:file:"+path+"/");
+        }
+        if(url.contains("jdbc:h2:file:../")){
+            String path = project.getProjectDir().getParentFile().getAbsolutePath();
+            url = url.replace("jdbc:h2:file:../", "jdbc:h2:file:"+path+"/");
+        }
+        datasource.put("url", url);
+        return datasource;
     }
 }

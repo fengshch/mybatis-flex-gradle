@@ -5,6 +5,8 @@ import com.mybatisflex.codegen.config.JavadocConfig;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.function.UnaryOperator;
+
 @Data
 public class JavadocConfigBuilder {
     /**
@@ -17,6 +19,15 @@ public class JavadocConfigBuilder {
      */
     private String since;
 
+    /**
+     * 表名格式化。
+     */
+    private UnaryOperator<String> tableCommentFormat = UnaryOperator.identity();
+
+    /**
+     * 列名格式化。
+     */
+    private UnaryOperator<String> columnCommentFormat = UnaryOperator.identity();
 
     /**
      * Entity 包注释。
@@ -54,6 +65,12 @@ public class JavadocConfigBuilder {
             javadocConfig.setAuthor(author);
         if (StringUtils.isNotBlank(since))
             javadocConfig.setSince(since);
+        if(tableCommentFormat != null)
+            javadocConfig.setTableCommentFormat(tableCommentFormat);
+
+        if(columnCommentFormat != null)
+            javadocConfig.setColumnCommentFormat(columnCommentFormat);
+
         if (StringUtils.isNotBlank(entityPackage))
             javadocConfig.setEntityPackage(entityPackage);
         if (StringUtils.isNotBlank(mapperPackage))

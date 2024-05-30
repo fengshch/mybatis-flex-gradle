@@ -26,27 +26,30 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.mybatis-flex:mybatis-flex-codegen:1.7.9'
 
-    implementation "gradle.plugin.org.flywaydb:gradle-plugin-publishing:10.8.1"
+    implementation(libs.mybatisFlexCodegen)
 
-    implementation 'com.mysql:mysql-connector-j:8.3.0'
+    implementation(libs.flywaydbGradlePluginPublishing)
 
-    implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation(libs.hikariCP)
 
-    implementation("org.yaml:snakeyaml:2.2")
+    implementation(libs.snakeyaml)
 
-    implementation("org.freemarker:freemarker:2.3.32")
+    implementation(libs.freemarker)
 
-    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation(libs.commonsLang3)
 
-    compileOnly("org.projectlombok:lombok:1.18.30")
-    testCompileOnly("org.projectlombok:lombok:1.18.30")
+    compileOnly(libs.lombok)
 
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testCompileOnly(libs.lombok)
 
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    annotationProcessor(libs.lombok)
+
+    testImplementation(libs.h2)
+
+    testImplementation(libs.junitJupiter)
+
+    testRuntimeOnly(libs.junitPlatformLauncher)
 }
 
 gradlePlugin {
@@ -88,6 +91,18 @@ tasks.named('test') {
 java {
 //    withJavadocJar()
     withSourcesJar()
+}
+
+compileJava {
+    options.encoding = 'UTF-8'
+}
+
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
+
+javadoc{
+    options.encoding = 'UTF-8'
 }
 
 publishing {

@@ -4,6 +4,7 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,26 +16,27 @@ import java.io.Serial;
  *  实体类。
  *
  * @author bill
- * @since 2024-02-20
+ * @since 2024-05-30
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(value = "users")
-
+@Table("USERS")
 public class Users implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id(keyType = KeyType.Auto)
-    private Integer id;
+    private Integer userId;
 
     private String username;
 
-    private String password;
+    private String email;
 
-    private Integer enabled;
+    private String passwordHash;
+
+    private Timestamp createdAt;
 
 }

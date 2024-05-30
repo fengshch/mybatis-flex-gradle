@@ -9,7 +9,7 @@ import java.io.Serial;
  *  表定义层。
  *
  * @author bill
- * @since 2024-02-20
+ * @since 2024-05-30
  */
 public class UsersTableDef extends TableDef {
 
@@ -22,16 +22,19 @@ public class UsersTableDef extends TableDef {
     public static final UsersTableDef USERS = new UsersTableDef();
 
     
-    public final QueryColumn ID = new QueryColumn(this, "id");
+    public final QueryColumn EMAIL = new QueryColumn(this, "EMAIL");
 
     
-    public final QueryColumn ENABLED = new QueryColumn(this, "enabled");
+    public final QueryColumn USER_ID = new QueryColumn(this, "USER_ID");
 
     
-    public final QueryColumn PASSWORD = new QueryColumn(this, "password");
+    public final QueryColumn USERNAME = new QueryColumn(this, "USERNAME");
 
     
-    public final QueryColumn USERNAME = new QueryColumn(this, "username");
+    public final QueryColumn CREATED_AT = new QueryColumn(this, "CREATED_AT");
+
+    
+    public final QueryColumn PASSWORD_HASH = new QueryColumn(this, "PASSWORD_HASH");
 
     /**
      * 所有字段。
@@ -41,10 +44,19 @@ public class UsersTableDef extends TableDef {
     /**
      * 默认字段，不包含逻辑删除或者 large 等字段。
      */
-    public final QueryColumn[] DEFAULT_COLUMNS = new QueryColumn[]{ID, USERNAME, PASSWORD, ENABLED};
+    public final QueryColumn[] DEFAULT_COLUMNS = new QueryColumn[]{USER_ID, USERNAME, EMAIL, PASSWORD_HASH, CREATED_AT};
 
     public UsersTableDef() {
-        super("", "users");
+        super("", "USERS");
+    }
+
+    private UsersTableDef(String schema, String name, String alisa) {
+        super(schema, name, alisa);
+    }
+
+    public UsersTableDef as(String alias) {
+        String key = getNameWithSchema() + "." + alias;
+        return getCache(key, k -> new UsersTableDef("", "USERS", alias));
     }
 
 }

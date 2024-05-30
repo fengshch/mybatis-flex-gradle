@@ -6,19 +6,23 @@ buildscript {
         }
     }
     dependencies {
+        classpath(libs.springBootGradlePlugin)
+        classpath(libs.springDependencyManagementPlugin)
         classpath 'com.github.fengshch:mybatis-flex-gradle-plugin:+'
 //        classpath "org.postgresql:postgresql:42.7.1"
-        classpath 'com.mysql:mysql-connector-j:8.3.0'
-        classpath 'org.flywaydb:flyway-mysql:10.8.1'
+//        classpath 'com.mysql:mysql-connector-j:8.3.0'
+        classpath(libs.h2)
+//        classpath(libs.flywayMysql)
     }
 }
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.0'
-    id 'io.spring.dependency-management' version '1.1.4'
 }
+
 apply {
     plugin 'com.github.fengshch.mybatis-flex-gradle-plugin'
+    plugin('org.springframework.boot')
+    plugin('io.spring.dependency-management')
 }
 group = 'example'
 version = 'unspecified'
@@ -32,6 +36,7 @@ configurations {
     }
 }
 
+//unGenerateTables = ['flyway_schema_history','CONSTANTS', 'ENUM_VALUES', 'INDEXES', 'INDEX_COLUMNS', "INFORMATION_SCHEMA_CATALOG_NAME",  "IN_DOUBT" , "LOCKS", "QUERY_STATISTICS" ,"RIGHTS", "ROLES", "SESSIONS", "SESSION_STATE", "SETTINGS", "SYNONYMS"  ]
 mybatis {
     configurations {
         main {
@@ -41,12 +46,14 @@ mybatis {
                 basePackage = 'com.example.mybatis'
             }
             strategyConfig {
+//                generateSchema="PUBLIC"
                 unGenerateTables = ['flyway_schema_history']
+//                unGenerateTables = ['flyway_schema_history','CONSTANTS', 'ENUM_VALUES', 'INDEXES', 'INDEX_COLUMNS', "INFORMATION_SCHEMA_CATALOG_NAME",  "IN_DOUBT" , "LOCKS", "QUERY_STATISTICS" ,"RIGHTS", "ROLES", "SESSIONS", "SESSION_STATE", "SETTINGS", "SYNONYMS"  ]
             }
             flyway {
                 cleanDisabled = false
 //                locations = ['classpath:db/migration']
-                locations = ['classpath:db/flyway']
+//                locations = ['classpath:db/flyway']
             }
         }
     }
@@ -59,19 +66,18 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation("com.mybatis-flex:mybatis-flex-spring-boot-starter:1.7.5") {
+    implementation(libs.mybatisFlexSpringBootStarter) {
         exclude group: 'org.mybatis', module: 'mybatis-spring'
     }
-    implementation "org.mybatis:mybatis-spring:3.0.4-SNAPSHOT"
-    implementation 'com.zaxxer:HikariCP:5.1.0'
-    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation(libs.mybatisSpring)
+
+    implementation(libs.hikariCP)
+    runtimeOnly(libs.h2)
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor "org.projectlombok:lombok"
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-//    testImplementation platform('org.junit:junit-bom:5.9.1')
-//    testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
 test {

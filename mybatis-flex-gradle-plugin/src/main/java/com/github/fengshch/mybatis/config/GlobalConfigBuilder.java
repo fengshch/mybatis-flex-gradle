@@ -32,6 +32,7 @@ public class GlobalConfigBuilder {
     private final ServiceConfigBuilder serviceConfigBuilder;
     private final ServiceImplConfigBuilder serviceImplConfigBuilder;
     private final ControllerConfigBuilder controllerConfigBuilder;
+    private final TableConfigBuilder tableConfigBuilder;
     private final TableDefConfigBuilder tableDefConfigBuilder;
     private final MapperXmlConfigBuilder mapperXmlConfigBuilder;
 
@@ -47,6 +48,7 @@ public class GlobalConfigBuilder {
         serviceConfigBuilder = new ServiceConfigBuilder();
         serviceImplConfigBuilder = new ServiceImplConfigBuilder();
         controllerConfigBuilder = new ControllerConfigBuilder();
+        tableConfigBuilder = new TableConfigBuilder();
         tableDefConfigBuilder = new TableDefConfigBuilder();
         mapperXmlConfigBuilder = new MapperXmlConfigBuilder();
         dataSourceConfigBuilder = new DataSourceConfigBuilder();
@@ -132,6 +134,11 @@ public class GlobalConfigBuilder {
     @SuppressWarnings("unused")
     public void controllerConfig(Closure<?> closure) {
         closure.setDelegate(controllerConfigBuilder);
+        closure.call();
+    }
+
+    public void tableConfig(Closure<?> closure) {
+        closure.setDelegate(tableConfigBuilder);
         closure.call();
     }
 

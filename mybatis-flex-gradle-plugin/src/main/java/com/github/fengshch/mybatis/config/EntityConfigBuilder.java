@@ -67,11 +67,10 @@ public class EntityConfigBuilder {
     private int jdkVersion = 21;
 
     /**
-     * 当开启这个配置后，Entity 会生成两个类，比如 Account 表会生成 Account.java
-     * 以及 AccountBase.java 这样的好处是，自动生成的 getter setter 字段等都在 Base 类里，而开发者可以在 Account.java 中添加自己的业务代码
-     * 此时，再次生成代码时，不会覆盖掉 Account.java 中的业务代码
+     * 当开启这个配置后，Entity 会生成两个类，比如 Account 表会生成 Account.java 以及 AccountBase.java
+     * 这样的好处是，自动生成的 getter setter 字段等都在 Base 类里，而开发者可以在 Account.java 中添加自己的业务代码
+     * 此时，当有数据库表结构发生变化，需要再次生成代码时，不会覆盖掉 Account.java 中的业务代码（只会覆盖 AccountBase 中的 Getter Setter）
      */
-
     private boolean withBaseClassEnable = false;
 
     /**
@@ -83,6 +82,16 @@ public class EntityConfigBuilder {
      * Base 类所在的包，默认情况下是在 entity 包下，添加一个 base 文件夹。
      */
     private String withBasePackage;
+
+    /**
+     * 是否支持把 comment 添加到 @column 注解里
+     */
+    private boolean columnCommentEnable = false;
+
+    /**
+     * 是否总是生成 @Column 注解。
+     */
+    private boolean alwaysGenColumnAnnotation = false;
 
     public void build(GlobalConfig globalConfig) {
         EntityConfig entityConfig = globalConfig.getEntityConfig();
@@ -145,5 +154,8 @@ public class EntityConfigBuilder {
 
         if (StringUtils.isNotBlank(withBasePackage))
             entityConfig.setWithBasePackage(withBasePackage);
+
+        entityConfig.setColumnCommentEnable(columnCommentEnable);
+        entityConfig.setAlwaysGenColumnAnnotation(alwaysGenColumnAnnotation);
     }
 }

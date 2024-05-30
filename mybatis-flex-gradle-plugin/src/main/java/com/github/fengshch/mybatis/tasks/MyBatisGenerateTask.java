@@ -30,6 +30,7 @@ public class MyBatisGenerateTask extends DefaultTask {
         GlobalConfig globalConfig = getGlobalConfig();
         Generator generator = new Generator(dataSource, globalConfig);
         generator.generate();
+        dataSource.close();
     }
 
     private HikariDataSource getDataSource() {

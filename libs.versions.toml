@@ -1,0 +1,39 @@
+[versions]
+mybatixFlexVer = "1.8.9"
+flywaydbVer = "10.13.0"
+mysqlVer = "8.4.0"
+hikariCPVer = "5.1.0"
+snakeyamlVer = "2.2"
+freemarkerVer = "2.3.32"
+commonsLang3Ver = "3.14.0"
+lombokVer = "1.18.32"
+junitJupiterVer = "5.10.2"
+junitPlatformLauncherVer = "1.10.2"
+flywayVer = "10.13.0"
+postgresqlVer = "42.7.3"
+mybatisSpringVer = "3.0.4-SNAPSHOT"
+springBootVer = "3.3.0"
+springDependencyManagementVer = "1.1.5"
+#h2Ver ="2.2.220"
+h2Ver ="1.4.200"
+
+[libraries]
+mybatisFlexCodegen = {group = "com.mybatis-flex", name="mybatis-flex-codegen", version.ref="mybatixFlexVer"}
+mybatisFlexSpringBootStarter = {group = "com.mybatis-flex", name="mybatis-flex-spring-boot-starter", version.ref="mybatixFlexVer"}
+flywaydbGradlePluginPublishing = {group = "gradle.plugin.org.flywaydb", name="gradle-plugin-publishing", version.ref="flywaydbVer"}
+mysqlConnectorJ= {group = "com.mysql", name="mysql-connector-j", version.ref="mysqlVer"}
+hikariCP = {group = "com.zaxxer", name="HikariCP", version.ref="hikariCPVer"}
+snakeyaml = {group = "org.yaml", name="snakeyaml", version.ref="snakeyamlVer"}
+freemarker = {group = "org.freemarker", name="freemarker", version.ref="freemarkerVer"}
+commonsLang3 = {group = "org.apache.commons", name="commons-lang3", version.ref="commonsLang3Ver"}
+lombok = {group = "org.projectlombok", name="lombok", version.ref="lombokVer"}
+junitJupiter = {group = "org.junit.jupiter", name="junit-jupiter", version.ref="junitJupiterVer"}
+junitPlatformLauncher = {group = "org.junit.platform", name="junit-platform-launcher", version.ref="junitPlatformLauncherVer"}
+flywayMysql = {group = "org.flywaydb", name="flyway-mysql", version.ref="flywayVer"}
+flywayPostgresql = {group = "org.flywaydb", name="flyway-postgresql", version.ref="flywayVer"}
+postgresql = {group = "org.postgresql", name="postgresql", version.ref="postgresqlVer"}
+mybatisSpring = {group = "org.mybatis", name="mybatis-spring", version.ref="mybatisSpringVer"}
+springBootGradlePlugin = {group = "org.springframework.boot", name="spring-boot-gradle-plugin", version.ref="springBootVer"}
+springDependencyManagementPlugin = {group = "io.spring.gradle", name="dependency-management-plugin", version.ref="springDependencyManagementVer"}
+h2 = {group = "com.h2database", name="h2", version.ref="h2Ver"}
+
