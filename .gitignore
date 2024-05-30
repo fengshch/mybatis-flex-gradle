@@ -1,35 +1,36 @@
-# Ignore Gradle files
+# Ignore Gradle build files
 .gradle/
-**/.gradle
+build/
+
+# Ignore IDEA project files
+.idea/
+
+# Ignore database files
 data/
 
-build/
+# Ignore all files in the example/build directory
 **/build/
 
-# Ignore IntelliJ files
-.idea/
-*.iml
-
-# Ignore Java / Log files
-*.log
+# Ignore common build files
 *.class
-
-# Ignore all text files
-*.txt
-
-# Ignore package files
 *.jar
 *.war
 *.ear
-*.zip
-*.tar.gz
-*.rar
 
-# Ignore OS generated files
+# Ignore operating system files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+*.old
+
+# Ignore user-specific settings
+*.iml
+*.ipr
+*.iws
