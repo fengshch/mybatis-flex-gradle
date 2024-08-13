@@ -1,6 +1,9 @@
 # Ignore Gradle build files
 .gradle/
 build/
+gradle/
+.gradlew
+.gradlew.bat
 
 # Ignore IDEA project files
 .idea/
