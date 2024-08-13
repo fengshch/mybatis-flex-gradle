@@ -1,4 +1,4 @@
-package com.example.mybatis.entity.table;
+package com.example.mybatis.po.table;
 
 import com.mybatisflex.core.query.QueryColumn;
 import com.mybatisflex.core.table.TableDef;
@@ -9,7 +9,7 @@ import java.io.Serial;
  *  表定义层。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 public class ProductsTableDef extends TableDef {
 
@@ -19,7 +19,7 @@ public class ProductsTableDef extends TableDef {
     /**
      * 
      */
-    public static final ProductsTableDef PRODUCTS = new ProductsTableDef();
+    public static final ProductsTableDef PRODUCTS_PO = new ProductsTableDef();
 
     
     public final QueryColumn PRICE = new QueryColumn(this, "PRICE");

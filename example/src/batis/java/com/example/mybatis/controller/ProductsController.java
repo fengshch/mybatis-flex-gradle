@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.mybatis.entity.Products;
+import com.example.mybatis.po.ProductsPO;
 import com.example.mybatis.repo.ProductsRepo;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  *  控制层。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/productsPO")
 public class ProductsController {
 
     @Autowired
@@ -31,12 +30,12 @@ public class ProductsController {
     /**
      * 添加。
      *
-     * @param products 
+     * @param productsPO 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public boolean save(@RequestBody Products products) {
-        return productsRepo.save(products);
+    public boolean save(@RequestBody ProductsPO productsPO) {
+        return productsRepo.save(productsPO);
     }
 
     /**
@@ -46,19 +45,19 @@ public class ProductsController {
      * @return {@code true} 删除成功，{@code false} 删除失败
      */
     @DeleteMapping("remove/{id}")
-    public boolean remove(@PathVariable Serializable id) {
+    public boolean remove(@PathVariable Integer id) {
         return productsRepo.removeById(id);
     }
 
     /**
      * 根据主键更新。
      *
-     * @param products 
+     * @param productsPO 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public boolean update(@RequestBody Products products) {
-        return productsRepo.updateById(products);
+    public boolean update(@RequestBody ProductsPO productsPO) {
+        return productsRepo.updateById(productsPO);
     }
 
     /**
@@ -67,7 +66,7 @@ public class ProductsController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public List<Products> list() {
+    public List<ProductsPO> list() {
         return productsRepo.list();
     }
 
@@ -78,7 +77,7 @@ public class ProductsController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public Products getInfo(@PathVariable Serializable id) {
+    public ProductsPO getInfo(@PathVariable Integer id) {
         return productsRepo.getById(id);
     }
 
@@ -89,7 +88,7 @@ public class ProductsController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Page<Products> page(Page<Products> page) {
+    public Page<ProductsPO> page(Page<ProductsPO> page) {
         return productsRepo.page(page);
     }
 

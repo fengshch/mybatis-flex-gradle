@@ -1,26 +1,25 @@
 [versions]
-mybatixFlexVer = "1.8.9"
-flywaydbVer = "10.13.0"
+mybatixFlexVer = "1.9.5"
 mysqlVer = "8.4.0"
 hikariCPVer = "5.1.0"
 snakeyamlVer = "2.2"
-freemarkerVer = "2.3.32"
-commonsLang3Ver = "3.14.0"
-lombokVer = "1.18.32"
-junitJupiterVer = "5.10.2"
-junitPlatformLauncherVer = "1.10.2"
-flywayVer = "10.13.0"
+freemarkerVer = "2.3.33"
+commonsLang3Ver = "3.16.0"
+lombokVer = "1.18.34"
+junitJupiterVer = "5.10.3"
+junitPlatformLauncherVer = "1.10.3"
+flywayVer = "10.17.0"
 postgresqlVer = "42.7.3"
-mybatisSpringVer = "3.0.4-SNAPSHOT"
-springBootVer = "3.3.0"
-springDependencyManagementVer = "1.1.5"
-#h2Ver ="2.2.220"
+mybatisSpringVer = "3.0.4"
+springBootVer = "3.3.2"
+springDependencyManagementVer = "1.1.6"
+#h2Ver ="2.2.224"
 h2Ver ="1.4.200"
 
 [libraries]
 mybatisFlexCodegen = {group = "com.mybatis-flex", name="mybatis-flex-codegen", version.ref="mybatixFlexVer"}
 mybatisFlexSpringBootStarter = {group = "com.mybatis-flex", name="mybatis-flex-spring-boot-starter", version.ref="mybatixFlexVer"}
-flywaydbGradlePluginPublishing = {group = "gradle.plugin.org.flywaydb", name="gradle-plugin-publishing", version.ref="flywaydbVer"}
+flywaydbGradlePluginPublishing = {group = "gradle.plugin.org.flywaydb", name="gradle-plugin-publishing", version.ref="flywayVer"}
 mysqlConnectorJ= {group = "com.mysql", name="mysql-connector-j", version.ref="mysqlVer"}
 hikariCP = {group = "com.zaxxer", name="HikariCP", version.ref="hikariCPVer"}
 snakeyaml = {group = "org.yaml", name="snakeyaml", version.ref="snakeyamlVer"}

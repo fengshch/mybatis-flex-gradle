@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.mybatis.entity.Orders;
+import com.example.mybatis.po.OrdersPO;
 import com.example.mybatis.repo.OrdersRepo;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  *  控制层。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/ordersPO")
 public class OrdersController {
 
     @Autowired
@@ -31,12 +30,12 @@ public class OrdersController {
     /**
      * 添加。
      *
-     * @param orders 
+     * @param ordersPO 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public boolean save(@RequestBody Orders orders) {
-        return ordersRepo.save(orders);
+    public boolean save(@RequestBody OrdersPO ordersPO) {
+        return ordersRepo.save(ordersPO);
     }
 
     /**
@@ -46,19 +45,19 @@ public class OrdersController {
      * @return {@code true} 删除成功，{@code false} 删除失败
      */
     @DeleteMapping("remove/{id}")
-    public boolean remove(@PathVariable Serializable id) {
+    public boolean remove(@PathVariable Integer id) {
         return ordersRepo.removeById(id);
     }
 
     /**
      * 根据主键更新。
      *
-     * @param orders 
+     * @param ordersPO 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public boolean update(@RequestBody Orders orders) {
-        return ordersRepo.updateById(orders);
+    public boolean update(@RequestBody OrdersPO ordersPO) {
+        return ordersRepo.updateById(ordersPO);
     }
 
     /**
@@ -67,7 +66,7 @@ public class OrdersController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public List<Orders> list() {
+    public List<OrdersPO> list() {
         return ordersRepo.list();
     }
 
@@ -78,7 +77,7 @@ public class OrdersController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public Orders getInfo(@PathVariable Serializable id) {
+    public OrdersPO getInfo(@PathVariable Integer id) {
         return ordersRepo.getById(id);
     }
 
@@ -89,7 +88,7 @@ public class OrdersController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Page<Orders> page(Page<Orders> page) {
+    public Page<OrdersPO> page(Page<OrdersPO> page) {
         return ordersRepo.page(page);
     }
 

@@ -2,15 +2,15 @@ package com.example.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import com.mybatisflex.core.BaseMapper;
-import com.example.mybatis.entity.Users;
+import com.example.mybatis.po.UsersPO;
 
 /**
  *  映射层。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 @Mapper
-public interface UsersMapper extends BaseMapper<Users> {
+public interface UsersMapper extends BaseMapper<UsersPO> {
 
 }

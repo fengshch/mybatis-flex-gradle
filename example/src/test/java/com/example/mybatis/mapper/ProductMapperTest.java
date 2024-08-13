@@ -1,7 +1,7 @@
 package com.example.mybatis.mapper;
 
-import com.example.mybatis.entity.Products;
-import com.example.mybatis.entity.table.ProductsTableDef;
+import com.example.mybatis.po.ProductsPO;
+import com.example.mybatis.po.table.ProductsTableDef;
 import com.mybatisflex.core.query.QueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -28,9 +28,9 @@ class ProductMapperTest {
     @Test
     void testQuery() {
         QueryWrapper queryWrapper = QueryWrapper.create()
-                .select(ProductsTableDef.PRODUCTS.ALL_COLUMNS)
-                .from(ProductsTableDef.PRODUCTS);
-        List<Products> products = productsMapper.selectListByQuery(queryWrapper);
+                .select(ProductsTableDef.PRODUCTS_PO.ALL_COLUMNS)
+                .from(ProductsTableDef.PRODUCTS_PO);
+        List<ProductsPO> products = productsMapper.selectListByQuery(queryWrapper);
         log.info("products: {}", products);
         assertFalse(products.isEmpty());
     }

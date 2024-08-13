@@ -9,20 +9,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.mybatis.entity.Users;
+import com.example.mybatis.po.UsersPO;
 import com.example.mybatis.repo.UsersRepo;
 import org.springframework.web.bind.annotation.RestController;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  *  控制层。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usersPO")
 public class UsersController {
 
     @Autowired
@@ -31,12 +30,12 @@ public class UsersController {
     /**
      * 添加。
      *
-     * @param users 
+     * @param usersPO 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public boolean save(@RequestBody Users users) {
-        return usersRepo.save(users);
+    public boolean save(@RequestBody UsersPO usersPO) {
+        return usersRepo.save(usersPO);
     }
 
     /**
@@ -46,19 +45,19 @@ public class UsersController {
      * @return {@code true} 删除成功，{@code false} 删除失败
      */
     @DeleteMapping("remove/{id}")
-    public boolean remove(@PathVariable Serializable id) {
+    public boolean remove(@PathVariable Integer id) {
         return usersRepo.removeById(id);
     }
 
     /**
      * 根据主键更新。
      *
-     * @param users 
+     * @param usersPO 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public boolean update(@RequestBody Users users) {
-        return usersRepo.updateById(users);
+    public boolean update(@RequestBody UsersPO usersPO) {
+        return usersRepo.updateById(usersPO);
     }
 
     /**
@@ -67,7 +66,7 @@ public class UsersController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public List<Users> list() {
+    public List<UsersPO> list() {
         return usersRepo.list();
     }
 
@@ -78,7 +77,7 @@ public class UsersController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public Users getInfo(@PathVariable Serializable id) {
+    public UsersPO getInfo(@PathVariable Integer id) {
         return usersRepo.getById(id);
     }
 
@@ -89,7 +88,7 @@ public class UsersController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Page<Users> page(Page<Users> page) {
+    public Page<UsersPO> page(Page<UsersPO> page) {
         return usersRepo.page(page);
     }
 

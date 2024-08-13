@@ -21,12 +21,14 @@ public class GlobalConfigBuilder {
     private boolean mapperXmlGenerateEnable = true;
     private boolean packageInfoGenerateEnable = true;
 
-    private final FlywayExtension flywayExtension;
     private final DataSourceConfigBuilder dataSourceConfigBuilder;
+
     private final JavadocConfigBuilder javadocConfigBuilder;
     private final PackageConfigBuilder packageConfigBuilder;
     private final StrategyConfigBuilder strategyConfigBuilder;
+    private final FlywayExtension flywayExtension;
     private final TemplateConfigBuilder templateConfigBuilder;
+
     private final EntityConfigBuilder entityConfigBuilder;
     private final MapperConfigBuilder mapperConfigBuilder;
     private final ServiceConfigBuilder serviceConfigBuilder;

@@ -17,12 +17,12 @@ public class StrategyConfigBuilder {
     /**
      * 逻辑删除的默认字段名称。
      */
-    private String logicDeleteColumn;
+    private String logicDeleteColumn = "deleted";
 
     /**
      * 乐观锁的字段名称。
      */
-    private String versionColumn;
+    private String versionColumn = "version";
 
     /**
      * 是否生成视图映射。

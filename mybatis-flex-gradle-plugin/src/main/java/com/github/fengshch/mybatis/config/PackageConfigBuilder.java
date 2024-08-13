@@ -22,7 +22,7 @@ public class PackageConfigBuilder {
     /**
      * Entity 所在包。
      */
-    private String entityPackage;
+    private String entityPackage = "po";
 
     /**
      * Mapper 所在包。

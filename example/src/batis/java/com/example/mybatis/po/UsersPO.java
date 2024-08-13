@@ -1,44 +1,42 @@
-package com.example.mybatis.entity;
+package com.example.mybatis.po;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
+
+import java.io.Serial;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.io.Serial;
 
 /**
  *  实体类。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("PRODUCTS")
-public class Products implements Serializable {
+@Table("USERS")
+public class UsersPO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id(keyType = KeyType.Auto)
-    private Integer productId;
+    private Integer userId;
 
-    private String productName;
+    private String username;
 
-    private String description;
+    private String email;
 
-    private BigDecimal price;
-
-    private Integer stock;
+    private String passwordHash;
 
     private Timestamp createdAt;
 

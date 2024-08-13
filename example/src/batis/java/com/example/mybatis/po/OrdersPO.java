@@ -1,4 +1,4 @@
-package com.example.mybatis.entity;
+package com.example.mybatis.po;
 
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
@@ -7,24 +7,25 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
+import java.io.Serial;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.io.Serial;
 
 /**
  *  实体类。
  *
  * @author bill
- * @since 2024-05-30
+ * @since 2024-08-13
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("ORDERS")
-public class Orders implements Serializable {
+public class OrdersPO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
