@@ -4,10 +4,8 @@ spring:
     username: sa
     password: password
     driverClassName: org.h2.Driver
-  profiles:
-    active: dev
 #---
 #spring:
-#  config:
-#    activate:
-#      on-profile: dev
+#    config:
+#      activate:
+#        on-profile: dev

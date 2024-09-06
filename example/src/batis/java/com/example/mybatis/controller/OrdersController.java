@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.mybatis.po.OrdersPO;
+import com.example.mybatis.po.OrdersPo;
 import com.example.mybatis.repo.OrdersRepo;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
  *  控制层。
  *
  * @author bill
- * @since 2024-08-13
+ * @since 2024-09-06
  */
 @RestController
-@RequestMapping("/ordersPO")
+@RequestMapping("/ordersPo")
 public class OrdersController {
 
     @Autowired
@@ -30,12 +30,12 @@ public class OrdersController {
     /**
      * 添加。
      *
-     * @param ordersPO 
+     * @param ordersPo 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public boolean save(@RequestBody OrdersPO ordersPO) {
-        return ordersRepo.save(ordersPO);
+    public boolean save(@RequestBody OrdersPo ordersPo) {
+        return ordersRepo.save(ordersPo);
     }
 
     /**
@@ -52,12 +52,12 @@ public class OrdersController {
     /**
      * 根据主键更新。
      *
-     * @param ordersPO 
+     * @param ordersPo 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public boolean update(@RequestBody OrdersPO ordersPO) {
-        return ordersRepo.updateById(ordersPO);
+    public boolean update(@RequestBody OrdersPo ordersPo) {
+        return ordersRepo.updateById(ordersPo);
     }
 
     /**
@@ -66,7 +66,7 @@ public class OrdersController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public List<OrdersPO> list() {
+    public List<OrdersPo> list() {
         return ordersRepo.list();
     }
 
@@ -77,7 +77,7 @@ public class OrdersController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public OrdersPO getInfo(@PathVariable Integer id) {
+    public OrdersPo getInfo(@PathVariable Integer id) {
         return ordersRepo.getById(id);
     }
 
@@ -88,7 +88,7 @@ public class OrdersController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Page<OrdersPO> page(Page<OrdersPO> page) {
+    public Page<OrdersPo> page(Page<OrdersPo> page) {
         return ordersRepo.page(page);
     }
 

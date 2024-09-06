@@ -18,25 +18,29 @@ import lombok.NoArgsConstructor;
  *  实体类。
  *
  * @author bill
- * @since 2024-08-13
+ * @since 2024-09-06
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("ORDERS")
-public class OrdersPO implements Serializable {
+@Table("PRODUCTS")
+public class ProductsPo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id(keyType = KeyType.Auto)
-    private Integer orderId;
+    private Integer productId;
 
-    private Integer userId;
+    private String productName;
 
-    private Timestamp orderDate;
+    private String description;
 
-    private BigDecimal totalAmount;
+    private BigDecimal price;
+
+    private Integer stock;
+
+    private Timestamp createdAt;
 
 }

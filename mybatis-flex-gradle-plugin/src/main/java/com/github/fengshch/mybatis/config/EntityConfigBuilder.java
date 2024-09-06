@@ -19,7 +19,7 @@ public class EntityConfigBuilder {
     /**
      * Entity 类的后缀。
      */
-    private String classSuffix = "PO";
+    private String classSuffix = "Po";
 
     /**
      * Entity 类的父类，可以自定义一些 BaseEntity 类。

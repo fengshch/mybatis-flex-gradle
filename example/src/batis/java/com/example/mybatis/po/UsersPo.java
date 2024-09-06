@@ -4,7 +4,6 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import java.io.Serial;
@@ -18,28 +17,26 @@ import lombok.NoArgsConstructor;
  *  实体类。
  *
  * @author bill
- * @since 2024-08-13
+ * @since 2024-09-06
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table("PRODUCTS")
-public class ProductsPO implements Serializable {
+@Table("USERS")
+public class UsersPo implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     @Id(keyType = KeyType.Auto)
-    private Integer productId;
+    private Integer userId;
 
-    private String productName;
+    private String username;
 
-    private String description;
+    private String email;
 
-    private BigDecimal price;
-
-    private Integer stock;
+    private String passwordHash;
 
     private Timestamp createdAt;
 

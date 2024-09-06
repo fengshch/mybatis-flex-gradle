@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.mybatis.po.ProductsPO;
+import com.example.mybatis.po.ProductsPo;
 import com.example.mybatis.repo.ProductsRepo;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
  *  控制层。
  *
  * @author bill
- * @since 2024-08-13
+ * @since 2024-09-06
  */
 @RestController
-@RequestMapping("/productsPO")
+@RequestMapping("/productsPo")
 public class ProductsController {
 
     @Autowired
@@ -30,12 +30,12 @@ public class ProductsController {
     /**
      * 添加。
      *
-     * @param productsPO 
+     * @param productsPo 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public boolean save(@RequestBody ProductsPO productsPO) {
-        return productsRepo.save(productsPO);
+    public boolean save(@RequestBody ProductsPo productsPo) {
+        return productsRepo.save(productsPo);
     }
 
     /**
@@ -52,12 +52,12 @@ public class ProductsController {
     /**
      * 根据主键更新。
      *
-     * @param productsPO 
+     * @param productsPo 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public boolean update(@RequestBody ProductsPO productsPO) {
-        return productsRepo.updateById(productsPO);
+    public boolean update(@RequestBody ProductsPo productsPo) {
+        return productsRepo.updateById(productsPo);
     }
 
     /**
@@ -66,7 +66,7 @@ public class ProductsController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public List<ProductsPO> list() {
+    public List<ProductsPo> list() {
         return productsRepo.list();
     }
 
@@ -77,7 +77,7 @@ public class ProductsController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public ProductsPO getInfo(@PathVariable Integer id) {
+    public ProductsPo getInfo(@PathVariable Integer id) {
         return productsRepo.getById(id);
     }
 
@@ -88,7 +88,7 @@ public class ProductsController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Page<ProductsPO> page(Page<ProductsPO> page) {
+    public Page<ProductsPo> page(Page<ProductsPo> page) {
         return productsRepo.page(page);
     }
 

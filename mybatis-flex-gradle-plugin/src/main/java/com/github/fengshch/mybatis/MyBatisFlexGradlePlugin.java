@@ -15,7 +15,6 @@ import org.gradle.api.plugins.JavaBasePlugin;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
-import org.gradle.internal.file.FileMetadata;
 import org.jetbrains.annotations.NotNull;
 import org.yaml.snakeyaml.Yaml;
 
@@ -23,8 +22,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.*;
-
-import static org.gradle.internal.file.impl.DefaultFileMetadata.file;
 
 /**
  * A simple 'hello world' plugin.
@@ -61,46 +58,58 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
 
     private void createGenerateTask(Project project, GlobalConfigBuilder globalConfigBuilder) {
         String name = globalConfigBuilder.getName().equals("main") ? "" : globalConfigBuilder.getName();
-        String taskName = "mybatis" + StringUtils.capitalize(name) + "Generate";
+        String taskName = "mybatis%sGenerate".formatted(StringUtils.capitalize(name));
         project.getTasks().register(taskName, MyBatisGenerateTask.class, globalConfigBuilder);
     }
 
+
     @SuppressWarnings("unchecked")
     private void configDatasource(Project project, GlobalConfigBuilder globalConfigBuilder) {
-        String profile = "default";
-        if (project.hasProperty("profile"))
-            profile = (String) project.property("profile");
-        else if (getActiveProfile(project) != null) {
-            profile = getActiveProfile(project);
-        } else if (System.getenv("PROFILE") != null) {
-            profile = System.getenv("PROFILE");
-        }
-
-
+        String profile = getProfile(project);
         DataSourceConfigBuilder dataSourceConfig = globalConfigBuilder.getDataSourceConfigBuilder();
-        String configName = globalConfigBuilder.getName();
+        File configFile = getConfigFile(project, profile);
+
+        Map<String, Object> datasource = readDataSourceConfig(configFile);
+        datasource = configH2Datasource(datasource, project);
+        setConfigFromMap(dataSourceConfig, "main".equals(globalConfigBuilder.getName()) ? Objects.requireNonNull(datasource) : (Map<String, Object>) Objects.requireNonNull(datasource).get(globalConfigBuilder.getName()));
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, Object> readDataSourceConfig(File configFile) {
+        try (FileInputStream yamlStream = new FileInputStream(configFile)) {
+            Yaml yaml = new Yaml();
+            Iterable<Object> documents = yaml.loadAll(yamlStream);
+            for (Object document : documents) {
+                Map<String, Object> props = (Map<String, Object>) document;
+                if (props != null) {
+                    Map<String, Object> spring = (Map<String, Object>) props.get("spring");
+                    if (spring != null) {
+                        Map<String, Object> datasource = (Map<String, Object>) spring.get("datasource");
+                        if (datasource != null) {
+                            return datasource;
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to read YAML file", e);
+        }
+        return null;
+    }
+
+    private String getProfile(Project project) {
+        if (project.hasProperty("profile")) return (String) project.property("profile");
+        String activeProfile = getActiveProfile(project);
+        if (activeProfile != null) return activeProfile;
+        return System.getenv("PROFILE") != null ? System.getenv("PROFILE") : "default";
+    }
+
+    private File getConfigFile(Project project, String profile) {
+        File flexConfigFile = project.file("src/main/resources/mybatis-flex.yml");
+        if (flexConfigFile.exists()) return flexConfigFile;
 
         Map<String, String> pathsMap = getStringStringMap();
-        String configFileName = pathsMap.get(profile);
-        File configFile = project.file(configFileName);
-        if (configFile.exists()) {
-            Map<String, Object> props = loadYaml(configFile);
-            if (props == null)
-                return;
-            Map<String, Object> mainConfig = (Map<String, Object>) props.get("spring");
-            if (mainConfig == null)
-                return;
-            Map<String, Object> datasource = (Map<String, Object>) mainConfig.get("datasource");
-            if (datasource == null)
-                return;
-            datasource = modifyDatasource(datasource, project);
-            if ("main".equals(configName)) {
-                setConfigFromMap(dataSourceConfig, datasource);
-            } else {
-                Map<String, Object> datasourceMap = (Map<String, Object>) datasource.get(configName);
-                setConfigFromMap(dataSourceConfig, datasourceMap);
-            }
-        }
+        return project.file(pathsMap.get(profile));
     }
 
     @NotNull
@@ -112,14 +121,14 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         return pathsMap;
     }
 
-    private HashMap<String, Object> loadYaml(File file) {
-        Yaml yaml = new Yaml();
-        try (FileInputStream fis = new FileInputStream(file)) {
-            return yaml.load(fis);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
+//    private Iterable<Object> loadYaml(File file) {
+//        Yaml yaml = new Yaml();
+//        try (FileInputStream fis = new FileInputStream(file)) {
+//            return yaml.loadAll(fis);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     private Properties loadProperties(File file) throws IOException {
         Properties properties = new Properties();
@@ -159,28 +168,40 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
     private String getActiveProfile(Project project) {
         File yamlFile = project.file("src/main/resources/application.yml");
         if (yamlFile.exists()) {
-            Map<String, Object> props = loadYaml(yamlFile);
-            if (props != null) {
-                Map<String, Object> spring = (Map<String, Object>) props.get("spring");
-                if (spring == null) return null;
-                Map<String, Object> profiles = (Map<String, Object>) spring.get("profiles");
-                if (profiles != null) return (String) profiles.get("active");
+            try (FileInputStream fis = new FileInputStream(yamlFile)) {
+                Yaml yaml = new Yaml();
+                Iterable<Object> documents = yaml.loadAll(fis);
+                for (Object document : documents) {
+                    Map<String, Object> props = (Map<String, Object>) document;
+                    if (props != null) {
+                        Map<String, Object> spring = (Map<String, Object>) props.get("spring");
+                        if (spring != null) {
+                            Map<String, Object> profiles = (Map<String, Object>) spring.get("profiles");
+                            if (profiles != null) {
+                                return (String) profiles.get("active");
+                            }
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
+
         }
         return null;
     }
 
-    private Map<String, Object>  modifyDatasource(Map<String, Object> datasource,Project project ){
+    private Map<String, Object> configH2Datasource(Map<String, Object> datasource, Project project) {
         if (datasource == null)
-           return null;
+            return null;
         String url = (String) datasource.get("url");
-        if(url.contains("jdbc:h2:file:./")){
+        if (url.contains("jdbc:h2:file:./")) {
             String path = project.getProjectDir().getAbsolutePath();
-            url = url.replace("jdbc:h2:file:./", "jdbc:h2:file:"+path+"/");
+            url = url.replace("jdbc:h2:file:./", "jdbc:h2:file:" + path + "/");
         }
-        if(url.contains("jdbc:h2:file:../")){
+        if (url.contains("jdbc:h2:file:../")) {
             String path = project.getProjectDir().getParentFile().getAbsolutePath();
-            url = url.replace("jdbc:h2:file:../", "jdbc:h2:file:"+path+"/");
+            url = url.replace("jdbc:h2:file:../", "jdbc:h2:file:" + path + "/");
         }
         datasource.put("url", url);
         return datasource;
