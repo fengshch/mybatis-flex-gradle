@@ -9,10 +9,11 @@ plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'idea'
 }
 
-group GROUP
-version VERSION
+group= GROUP
+version= VERSION
 
 java {
     sourceCompatibility = '21'
@@ -61,38 +62,6 @@ gradlePlugin {
     }
 }
 
-// Add a source set for the functional test suite
-sourceSets {
-    functionalTest {
-    }
-}
-
-configurations.functionalTestImplementation.extendsFrom(configurations.testImplementation)
-configurations.functionalTestRuntimeOnly.extendsFrom(configurations.testRuntimeOnly)
-
-// Add a task to run the functional tests
-tasks.register('functionalTest', Test) {
-    testClassesDirs = sourceSets.functionalTest.output.classesDirs
-    classpath = sourceSets.functionalTest.runtimeClasspath
-    useJUnitPlatform()
-}
-
-gradlePlugin.testSourceSets.add(sourceSets.functionalTest)
-
-tasks.named('check') {
-    // Run the functional tests as part of `check`
-    dependsOn(tasks.functionalTest)
-}
-
-tasks.named('test') {
-    // Use JUnit Jupiter for unit tests.
-    useJUnitPlatform()
-}
-java {
-//    withJavadocJar()
-    withSourcesJar()
-}
-
 compileJava {
     options.encoding = 'UTF-8'
 }
@@ -105,19 +74,9 @@ javadoc{
     options.encoding = 'UTF-8'
 }
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId = "mybatis-flex-gradle-plugin"
-            from(components.java)
-            versionMapping {
-                usage("java-api") {
-                    fromResolutionOf("runtimeClasspath")
-                }
-                usage("java-runtime") {
-                    fromResolutionOf("runtimeClasspath")
-                }
-            }
-        }
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
     }
 }

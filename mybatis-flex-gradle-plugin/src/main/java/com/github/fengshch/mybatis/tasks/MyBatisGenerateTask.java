@@ -6,6 +6,7 @@ import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.TableDefConfig;
 import com.mybatisflex.codegen.dialect.IDialect;
+import com.mybatisflex.codegen.dialect.JdbcTypeMapping;
 import com.zaxxer.hikari.HikariDataSource;
 import org.apache.commons.lang3.StringUtils;
 import org.gradle.api.DefaultTask;
@@ -13,6 +14,8 @@ import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class MyBatisGenerateTask extends DefaultTask {
@@ -37,6 +40,7 @@ public class MyBatisGenerateTask extends DefaultTask {
             default -> IDialect.DEFAULT;
         };
         Generator generator = new Generator(dataSource, globalConfig, iDialect);
+        JdbcTypeMapping.registerMapping(Timestamp.class, LocalDateTime.class);
         generator.generate();
         dataSource.close();
     }

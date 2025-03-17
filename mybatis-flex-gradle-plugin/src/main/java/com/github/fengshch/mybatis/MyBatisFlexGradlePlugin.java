@@ -46,7 +46,9 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
                     if (sourceSets.getNames().contains("main")) {
                         SourceSet sourceSet = sourceSets.getByName(SourceSet.MAIN_SOURCE_SET_NAME);
                         String batisSourceSetJavaDir = globalConfigBuilder.getPackageConfigBuilder().getSourceDir();
-                        sourceSet.getJava().srcDir(batisSourceSetJavaDir);
+                        if(batisSourceSetJavaDir != null && !batisSourceSetJavaDir.equals("src/main/java")) {
+                            sourceSet.getJava().srcDir(batisSourceSetJavaDir);
+                        }
                     }
                 });
 
@@ -156,12 +158,12 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
             flywayExtension) {
         String taskNamePri = globalConfigBuilder.getName().equals("main") ? "flyway" : globalConfigBuilder.getName();
         project.getTasks().register(taskNamePri + "Clean", CustomFlywayCleanTask.class, flywayExtension);
-        project.getTasks().create(taskNamePri + "Baseline", CustomFlywayBaselineTask.class, flywayExtension);
-        project.getTasks().create(taskNamePri + "Migrate", CustomFlywayMigrateTask.class, flywayExtension);
-        project.getTasks().create(taskNamePri + "Undo", CustomFlywayUndoTask.class, flywayExtension);
-        project.getTasks().create(taskNamePri + "Validate", CustomFlywayValidateTask.class, flywayExtension);
-        project.getTasks().create(taskNamePri + "Info", CustomFlywayInfoTask.class, flywayExtension);
-        project.getTasks().create(taskNamePri + "Repair", CustomFlywayRepairTask.class, flywayExtension);
+        project.getTasks().register(taskNamePri + "Baseline", CustomFlywayBaselineTask.class, flywayExtension);
+        project.getTasks().register(taskNamePri + "Migrate", CustomFlywayMigrateTask.class, flywayExtension);
+        project.getTasks().register(taskNamePri + "Undo", CustomFlywayUndoTask.class, flywayExtension);
+        project.getTasks().register(taskNamePri + "Validate", CustomFlywayValidateTask.class, flywayExtension);
+        project.getTasks().register(taskNamePri + "Info", CustomFlywayInfoTask.class, flywayExtension);
+        project.getTasks().register(taskNamePri + "Repair", CustomFlywayRepairTask.class, flywayExtension);
     }
 
     @SuppressWarnings("unchecked")
