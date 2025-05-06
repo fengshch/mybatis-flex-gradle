@@ -26,8 +26,9 @@ public class GlobalConfigBuilder {
     private final JavadocConfigBuilder javadocConfigBuilder;
     private final PackageConfigBuilder packageConfigBuilder;
     private final StrategyConfigBuilder strategyConfigBuilder;
-    private final FlywayExtension flywayExtension;
     private final TemplateConfigBuilder templateConfigBuilder;
+
+    private final FlywayExtension flywayExtension;
 
     private final EntityConfigBuilder entityConfigBuilder;
     private final MapperConfigBuilder mapperConfigBuilder;

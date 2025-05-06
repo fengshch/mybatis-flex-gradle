@@ -59,6 +59,7 @@ public class JavadocConfigBuilder {
      */
     private String tableDefPackage = "表定义层（TableDef）软件包。";
 
+
     public void build(GlobalConfig globalConfig){
         JavadocConfig javadocConfig = globalConfig.getJavadocConfig();
         if (StringUtils.isNotBlank(author))

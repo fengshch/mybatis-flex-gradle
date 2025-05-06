@@ -5,6 +5,8 @@ import com.mybatisflex.codegen.config.GlobalConfig;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.Serializable;
+
 @Data
 public class EntityConfigBuilder {
 
@@ -19,7 +21,7 @@ public class EntityConfigBuilder {
     /**
      * Entity 类的后缀。
      */
-    private String classSuffix = "Po";
+    private String classSuffix = "PO";
 
     /**
      * Entity 类的父类，可以自定义一些 BaseEntity 类。
@@ -32,6 +34,11 @@ public class EntityConfigBuilder {
     private boolean overwriteEnable = true;
 
     /**
+     * 生成Base类时是否覆盖之前生成的文件。
+     */
+    private boolean baseOverwriteEnable;
+
+    /**
      * Entity 默认实现的接口。
      */
     private String implInterfaces;
@@ -41,6 +48,15 @@ public class EntityConfigBuilder {
      */
     private boolean withLombok = true;
 
+    /**
+     * 当开启 Lombok 注解且不使用 Active Record 时，是否生成 Entity @NoArgsConstructor 注解。
+     */
+    private boolean lombokNoArgsConstructorEnable = true;
+
+    /**
+     * 当开启 Lombok 注解且不使用 Active Record 时，是否生成 Entity @AllArgsConstructor 注解。
+     */
+    private boolean lombokAllArgsConstructorEnable = true;
     /**
      * Entity 是否使用 Swagger 注解。
      */
@@ -92,6 +108,11 @@ public class EntityConfigBuilder {
      * 是否总是生成 @Column 注解。
      */
     private boolean alwaysGenColumnAnnotation = false;
+
+    /**
+     * 继承的父类是否添加泛型
+     */
+    private boolean superClassGenericity = false;
 
     public void build(GlobalConfig globalConfig) {
         EntityConfig entityConfig = globalConfig.getEntityConfig();

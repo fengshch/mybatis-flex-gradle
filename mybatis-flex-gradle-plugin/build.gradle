@@ -12,11 +12,13 @@ plugins {
     id 'idea'
 }
 
-group= GROUP
-version= VERSION
+group = GROUP
+version = VERSION
 
 java {
     sourceCompatibility = '21'
+    withJavadocJar() // Generates javadocJar automatically
+    withSourcesJar() // Generates sourcesJar automatically
 }
 
 
@@ -62,17 +64,59 @@ gradlePlugin {
     }
 }
 
-compileJava {
-    options.encoding = 'UTF-8'
+publishing {
+//    publications {
+//        create("mavenJava", MavenPublication) {
+//            from components.java
+//
+////            // Ensure sourcesJar and javadocJar tasks exist
+////            artifact(tasks.named("sourcesJar"))
+////            artifact(tasks.named("javadocJar"))
+//
+//            // Custom POM
+//            pom {
+//                name.set("MyBatis Flex Gradle Plugin")
+//                description.set("A Gradle plugin for MyBatis Flex code generation")
+//                url.set("https://github.com/fengshch/mybatis-flex-gradle-plugin")
+//
+//                licenses {
+//                    license {
+//                        name.set("Apache-2.0")
+//                        url.set("https://opensource.org/licenses/Apache-2.0")
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id.set("fengshch")
+//                        name.set("Bill Feng")
+//                        email.set("fengshch@gmail.com")
+//                    }
+//                }
+//                scm {
+//                    connection.set("scm:git:git://github.com/fengshch/mybatis-flex-gradle-plugin.git")
+//                    developerConnection.set("scm:git:ssh://github.com/fengshch/mybatis-flex-gradle-plugin.git")
+//                    url.set("https://github.com/fengshch/mybatis-flex-gradle-plugin")
+//                }
+//            }
+//        }
+//    }
+    repositories {
+        maven {
+            name = "maven-release"
+            def releasesRepoUrl = uri("http://172.16.12.219:8081/repository/maven-releases/")
+            def snapshotsRepoUrl = uri("http://172.16.12.219:8081/repository/maven-snapshots/")
+            def isSnapshot = project.version?.toString()?.endsWith("SNAPSHOT") ?: false
+            url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
+            allowInsecureProtocol=true
+
+            credentials {
+                username = findProperty("NexusUser") ?: System.getenv("NEXUS_USER") ?: ""
+                password = findProperty("NexusPassword") ?: System.getenv("NEXUS_PASSWORD") ?: ""
+            }
+        }
+    }
 }
 
-compileTestJava {
-    options.encoding = 'UTF-8'
-}
-
-javadoc{
-    options.encoding = 'UTF-8'
-}
 
 idea {
     module {

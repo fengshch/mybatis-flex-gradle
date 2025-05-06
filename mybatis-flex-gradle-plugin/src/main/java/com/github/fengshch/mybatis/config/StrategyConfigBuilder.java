@@ -1,10 +1,10 @@
 package com.github.fengshch.mybatis.config;
 
-import com.mybatisflex.codegen.config.GlobalConfig;
-import com.mybatisflex.codegen.config.StrategyConfig;
+import com.mybatisflex.codegen.config.*;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -13,6 +13,11 @@ public class StrategyConfigBuilder {
      * 数据库表前缀，多个前缀用英文逗号（,） 隔开。
      */
     private String tablePrefix;
+
+    /**
+     * 数据库表后缀，多个后缀用英文逗号（,） 隔开。
+     */
+    private String  tableSuffix;
 
     /**
      * 逻辑删除的默认字段名称。
@@ -32,12 +37,19 @@ public class StrategyConfigBuilder {
     /**
      * 单独为某张表添加独立的配置。
      */
-//    private Map<String, TableConfig> tableConfigMap;
+    // private Map<String, TableConfig> tableConfigMap;
 
     /**
      * 设置某个列的全局配置。
      */
-//    private Map<String, ColumnConfig> columnConfigMap;
+    // private Map<String, ColumnConfig> columnConfigMap;
+
+    /**
+     * 自定义列配置工厂。
+     */
+    //private ColumnConfigFactory columnConfigFactory;
+
+
 
     /**
      * 需要生成的表在哪个模式下
