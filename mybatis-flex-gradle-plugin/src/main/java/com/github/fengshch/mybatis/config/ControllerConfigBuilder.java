@@ -3,15 +3,19 @@ package com.github.fengshch.mybatis.config;
 import com.mybatisflex.codegen.config.ControllerConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *  Config controller config
  */
 @Data
-@NoArgsConstructor
 public class ControllerConfigBuilder {
+
+    /**
+     * Default constructor for ControllerConfigBuilder.
+     */
+    public ControllerConfigBuilder() {
+    }
     /**
      *代码生成目录，当未配置时，使用 PackageConfig 的配置
      */
@@ -47,6 +51,11 @@ public class ControllerConfigBuilder {
      */
     private boolean restStyle = true;
 
+    /**
+     * Builds and configures the controller configuration in the global config.
+     *
+     * @param globalConfig the global configuration to update
+     */
     public void build(GlobalConfig globalConfig) {
         ControllerConfig controllerConfig = globalConfig.getControllerConfig();
 
