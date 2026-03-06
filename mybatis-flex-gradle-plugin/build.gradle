@@ -77,8 +77,8 @@ publishing {
     repositories {
         maven {
             name = "maven-release"
-            def releasesRepoUrl = uri("http://172.16.1.230:8081/repository/maven-releases/")
-            def snapshotsRepoUrl = uri("http://172.16.1.230:8081/repository/maven-snapshots/")
+            def releasesRepoUrl = uri(findProperty("NexusReleasesRepoUrl") ?: System.getenv("NEXUS_RELEASES_REPO_URL") ?: "")
+            def snapshotsRepoUrl = uri(findProperty("NexusSnapshotsRepoUrl") ?: System.getenv("NEXUS_SNAPSHOTS_REPO_URL") ?: "")
             def isSnapshot = project.version?.toString()?.endsWith("SNAPSHOT") ?: false
             url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
             allowInsecureProtocol=true
