@@ -6,8 +6,24 @@ import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.gradle.api.Project;
 
+/**
+ * Builder class for configuring package paths and naming conventions.
+ *
+ * This class configures the directory and package structure for all generated code including
+ * entities, mappers, services, controllers, and table definitions. It also handles XML mapper
+ * file output paths.
+ *
+ * @see GlobalConfigBuilder
+ * @see PackageConfig
+ */
 @Data
 public class PackageConfigBuilder {
+
+    /**
+     * Constructs a new {@code PackageConfigBuilder} with default settings.
+     */
+    public PackageConfigBuilder() {
+    }
 
     /**
      * 代码生成目录。
@@ -54,6 +70,12 @@ public class PackageConfigBuilder {
      */
     private String mapperXmlPath;// = "src/batis/resources/mapper";
 
+    /**
+     * Builds and applies the package configuration to the global config.
+     *
+     * @param project the Gradle {@link Project} for resolving paths
+     * @param globalConfig the {@link GlobalConfig} to update with package settings
+     */
     public void build(Project project, GlobalConfig globalConfig) {
         PackageConfig packageConfig = globalConfig.getPackageConfig();
         if (StringUtils.isNotBlank(sourceDir)){

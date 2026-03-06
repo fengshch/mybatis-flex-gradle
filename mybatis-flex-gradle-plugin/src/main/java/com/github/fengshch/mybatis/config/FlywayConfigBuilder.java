@@ -5,10 +5,25 @@ import org.apache.commons.lang3.StringUtils;
 import org.flywaydb.gradle.FlywayExtension;
 import org.gradle.api.Project;
 
+/**
+ * Builder class for configuring Flyway database migration settings.
+ *
+ * This class builds and configures a {@link FlywayExtension} with database connection details,
+ * migration paths, naming conventions, and execution parameters for automated database schema
+ * versioning and migration management.
+ *
+ * @see GlobalConfigBuilder
+ * @see FlywayExtension
+ */
 @Data
 public class FlywayConfigBuilder {
     private final String name;
 
+    /**
+     * Constructs a new {@code FlywayConfigBuilder} with the specified configuration name.
+     *
+     * @param name the name of this Flyway configuration
+     */
     public FlywayConfigBuilder(String name) {
         this.name = name;
     }
@@ -79,6 +94,12 @@ public class FlywayConfigBuilder {
     private Boolean failOnMissingLocations;
 //    private Map<String, String> pluginConfiguration;
 
+    /**
+     * Builds a {@link FlywayExtension} from the current configuration and registers it with the project.
+     *
+     * @param project the Gradle {@link Project} where the extension will be registered
+     * @return the configured {@link FlywayExtension}
+     */
     public FlywayExtension build(Project project) {
         FlywayExtension flywayExtension = project.getExtensions().create(name + "Flyway", FlywayExtension.class);
         flywayExtension.driver = driver;
@@ -135,7 +156,7 @@ public class FlywayConfigBuilder {
         flywayExtension.skipExecutingMigrations = skipExecutingMigrations;
         flywayExtension.outputQueryResults = outputQueryResults;
         flywayExtension.validateOnMigrate = validateOnMigrate;
-        flywayExtension.cleanOnValidationError = cleanOnValidationError;
+//        flywayExtension.cleanOnValidationError = cleanOnValidationError;
         if (StringUtils.isNotBlank(ignoreMigrationPatterns))
             flywayExtension.ignoreMigrationPatterns = ignoreMigrationPatterns.split(",");
         flywayExtension.validateMigrationNaming = validateMigrationNaming;

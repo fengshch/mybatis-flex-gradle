@@ -5,8 +5,23 @@ import com.mybatisflex.codegen.config.TableDefConfig;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Builder class for configuring TableDef code generation settings.
+ *
+ * This class configures the generation of TableDef (table definition) auxiliary classes that
+ * provide type-safe SQL builder support for dynamic query construction.
+ *
+ * @see GlobalConfigBuilder
+ * @see TableDefConfig
+ */
 @Data
 public class TableDefConfigBuilder {
+
+    /**
+     * Constructs a new {@code TableDefConfigBuilder} with default settings.
+     */
+    public TableDefConfigBuilder() {
+    }
 
     /**
      * 代码生成目录，当未配置时，使用 PackageConfig 的配置
@@ -37,6 +52,11 @@ public class TableDefConfigBuilder {
      */
     private String instanceSuffix = "";
 
+    /**
+     * Builds and applies the table definition configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with table definition settings
+     */
     public void build(GlobalConfig globalConfig){
         TableDefConfig tableDefConfig = globalConfig.getTableDefConfig();
 

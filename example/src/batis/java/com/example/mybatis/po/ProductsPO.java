@@ -18,14 +18,14 @@ import lombok.NoArgsConstructor;
  *  实体类。
  *
  * @author bill
- * @since 2024-12-10
+ * @since 2026-03-06
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("PRODUCTS")
-public class ProductsPo implements Serializable {
+public class ProductsPO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;

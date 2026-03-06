@@ -14,13 +14,33 @@ import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Comparator;
 
+/**
+ * Gradle task for executing MyBatis Flex code generation.
+ *
+ * This task performs the actual code generation based on the database schema and the
+ * configuration provided by {@link GlobalConfigBuilder}. It connects to the database,
+ * introspects the schema, and generates entity, mapper, service, and other related classes.
+ *
+ * @see GlobalConfigBuilder
+ * @see Generator
+ */
 public class MyBatisGenerateTask extends DefaultTask {
     private final GlobalConfigBuilder globalConfigBuilder;
 
+    /**
+     * Constructs a new {@code MyBatisGenerateTask} with the specified global config builder.
+     *
+     * @param globalConfigBuilder the {@link GlobalConfigBuilder} containing generation configuration
+     */
     @Inject
     public MyBatisGenerateTask(GlobalConfigBuilder globalConfigBuilder) {
         this.setGroup("mybatis");
@@ -29,7 +49,10 @@ public class MyBatisGenerateTask extends DefaultTask {
     }
 
     @TaskAction
-    void generate() throws ClassNotFoundException {
+    void generate() throws ClassNotFoundException, IOException {
+        // Clean the batis directory before generation
+        cleanBatisDirectory();
+
         HikariDataSource dataSource = getDataSource();
         GlobalConfig globalConfig = getGlobalConfig();
         IDialect iDialect = switch (dataSource.getDriverClassName()) {
@@ -43,6 +66,40 @@ public class MyBatisGenerateTask extends DefaultTask {
         JdbcTypeMapping.registerMapping(Timestamp.class, LocalDateTime.class);
         generator.generate();
         dataSource.close();
+    }
+
+    /**
+     * Cleans the batis directory before code generation to ensure a fresh start.
+     * This method deletes the configured source directory if it exists.
+     */
+    private void cleanBatisDirectory() throws IOException {
+        String sourceDir = globalConfigBuilder.getPackageConfigBuilder().getSourceDir();
+        if (StringUtils.isBlank(sourceDir)) {
+            return;
+        }
+
+        File batisDir = new File(getProject().getProjectDir(), sourceDir);
+        if (batisDir.exists() && batisDir.isDirectory()) {
+            getLogger().lifecycle("Cleaning batis directory: {}", batisDir.getAbsolutePath());
+            deleteDirectory(batisDir);
+            getLogger().lifecycle("Batis directory cleaned successfully");
+        }
+    }
+
+    /**
+     * Recursively deletes a directory and all its contents.
+     *
+     * @param directory the directory to delete
+     * @throws IOException if an I/O error occurs
+     */
+    private void deleteDirectory(File directory) throws IOException {
+        Path dirPath = directory.toPath();
+        if (Files.exists(dirPath)) {
+            Files.walk(dirPath)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+        }
     }
 
     private HikariDataSource getDataSource() {

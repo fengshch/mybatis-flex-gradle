@@ -9,8 +9,26 @@ import com.mybatisflex.codegen.config.TableConfig;
 
 import java.util.Map;
 
+/**
+ * Builder class for configuring table-specific code generation settings.
+ *
+ * This class allows configuration of individual table generation options including
+ * naming conventions, listener classes, and column-specific settings.
+ *
+ * @see GlobalConfigBuilder
+ * @see TableConfig
+ */
 public class TableConfigBuilder {
 
+    /**
+     * Constructs a new {@code TableConfigBuilder} with default settings.
+     */
+    public TableConfigBuilder() {
+    }
+
+    /**
+     * Constant representing all tables for code generation.
+     */
     public static final String ALL_TABLES = "*";
 
     /**
@@ -54,6 +72,12 @@ public class TableConfigBuilder {
      */
     private Map<String, ColumnConfig> columnConfigMap;
 
+    /**
+     * Builds and applies the table configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with table settings
+     * @throws ClassNotFoundException if listener or column configuration classes are not found
+     */
     public void build(GlobalConfig globalConfig) throws ClassNotFoundException {
         TableConfig tableConfig = globalConfig.getTableConfigMap().get(tableName);
 

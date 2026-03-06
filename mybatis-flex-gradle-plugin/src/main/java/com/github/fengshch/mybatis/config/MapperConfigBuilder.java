@@ -5,8 +5,23 @@ import com.mybatisflex.codegen.config.MapperConfig;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Builder class for configuring Mapper interface code generation settings.
+ *
+ * This class configures the generation of MyBatis Mapper interface classes, including
+ * naming conventions, inheritance, output paths, and annotation options.
+ *
+ * @see GlobalConfigBuilder
+ * @see MapperConfig
+ */
 @Data
 public class MapperConfigBuilder {
+
+    /**
+     * Constructs a new {@code MapperConfigBuilder} with default settings.
+     */
+    public MapperConfigBuilder() {
+    }
 
     /**
      * 代码生成目录，当未配置时，使用 PackageConfig 的配置
@@ -37,6 +52,11 @@ public class MapperConfigBuilder {
      */
     private boolean mapperAnnotation = true;
 
+    /**
+     * Builds and applies the mapper configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with mapper settings
+     */
     public void build(GlobalConfig globalConfig) {
         MapperConfig mapperConfig = globalConfig.getMapperConfig();
 

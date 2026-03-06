@@ -7,8 +7,24 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 
+/**
+ * Builder class for configuring Entity code generation settings.
+ *
+ * This class configures how Entity classes are generated, including naming conventions,
+ * annotations, inheritance, and output paths. It supports customization of prefixes, suffixes,
+ * Lombok annotations, Swagger documentation, and Active Record patterns.
+ *
+ * @see GlobalConfigBuilder
+ * @see EntityConfig
+ */
 @Data
 public class EntityConfigBuilder {
+
+    /**
+     * Constructs a new {@code EntityConfigBuilder} with default settings.
+     */
+    public EntityConfigBuilder() {
+    }
 
     /**
      * 代码生成目录，当未配置时，使用 PackageConfig 的配置
@@ -114,6 +130,11 @@ public class EntityConfigBuilder {
      */
     private boolean superClassGenericity = false;
 
+    /**
+     * Builds and applies the entity configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with entity settings
+     */
     public void build(GlobalConfig globalConfig) {
         EntityConfig entityConfig = globalConfig.getEntityConfig();
         if (StringUtils.isNotBlank(sourceDir))

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.mybatis.po.UsersPo;
+import com.example.mybatis.po.UsersPO;
 import com.example.mybatis.repo.UsersRepo;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
@@ -18,24 +18,24 @@ import java.util.List;
  *  控制层。
  *
  * @author bill
- * @since 2024-12-10
+ * @since 2026-03-06
  */
 @RestController
-@RequestMapping("/usersPo")
+@RequestMapping("/usersPO")
 public class UsersController {
 
     @Autowired
     private UsersRepo usersRepo;
 
     /**
-     * 添加。
+     * 保存。
      *
-     * @param usersPo 
-     * @return {@code true} 添加成功，{@code false} 添加失败
+     * @param usersPO 
+     * @return {@code true} 保存成功，{@code false} 保存失败
      */
     @PostMapping("save")
-    public boolean save(@RequestBody UsersPo usersPo) {
-        return usersRepo.save(usersPo);
+    public boolean save(@RequestBody UsersPO usersPO) {
+        return usersRepo.save(usersPO);
     }
 
     /**
@@ -52,12 +52,12 @@ public class UsersController {
     /**
      * 根据主键更新。
      *
-     * @param usersPo 
+     * @param usersPO 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public boolean update(@RequestBody UsersPo usersPo) {
-        return usersRepo.updateById(usersPo);
+    public boolean update(@RequestBody UsersPO usersPO) {
+        return usersRepo.updateById(usersPO);
     }
 
     /**
@@ -66,18 +66,18 @@ public class UsersController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public List<UsersPo> list() {
+    public List<UsersPO> list() {
         return usersRepo.list();
     }
 
     /**
-     * 根据主键获取详细信息。
+     * 根据主键获取。
      *
      * @param id 主键
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public UsersPo getInfo(@PathVariable Integer id) {
+    public UsersPO getInfo(@PathVariable Integer id) {
         return usersRepo.getById(id);
     }
 
@@ -88,7 +88,7 @@ public class UsersController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Page<UsersPo> page(Page<UsersPo> page) {
+    public Page<UsersPO> page(Page<UsersPO> page) {
         return usersRepo.page(page);
     }
 

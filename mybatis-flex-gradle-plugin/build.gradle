@@ -16,7 +16,7 @@ group = GROUP
 version = VERSION
 
 java {
-    sourceCompatibility = '21'
+    sourceCompatibility = '25'
     withJavadocJar() // Generates javadocJar automatically
     withSourcesJar() // Generates sourcesJar automatically
 }
@@ -47,6 +47,8 @@ dependencies {
     testCompileOnly(libs.lombok)
 
     annotationProcessor(libs.lombok)
+
+    testAnnotationProcessor(libs.lombok)
 
     testImplementation(libs.h2)
 
@@ -103,8 +105,8 @@ publishing {
     repositories {
         maven {
             name = "maven-release"
-            def releasesRepoUrl = uri("http://172.16.12.219:8081/repository/maven-releases/")
-            def snapshotsRepoUrl = uri("http://172.16.12.219:8081/repository/maven-snapshots/")
+            def releasesRepoUrl = uri("http://172.16.1.230:8081/repository/maven-releases/")
+            def snapshotsRepoUrl = uri("http://172.16.1.230:8081/repository/maven-snapshots/")
             def isSnapshot = project.version?.toString()?.endsWith("SNAPSHOT") ?: false
             url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
             allowInsecureProtocol=true
@@ -115,6 +117,11 @@ publishing {
             }
         }
     }
+}
+
+tasks.named("test"){
+    useJUnitPlatform()
+    failOnNoDiscoveredTests=false
 }
 
 

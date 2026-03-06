@@ -7,8 +7,24 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.UnaryOperator;
 
+/**
+ * Builder class for configuring JavaDoc/code comment generation settings.
+ *
+ * This class configures how JavaDoc comments are generated for entity, mapper, service,
+ * controller, and table definition classes. It supports customization of author information,
+ * comment formatting, and package-level documentation.
+ *
+ * @see GlobalConfigBuilder
+ * @see JavadocConfig
+ */
 @Data
 public class JavadocConfigBuilder {
+    /**
+     * Constructs a new {@code JavadocConfigBuilder} with default settings.
+     */
+    public JavadocConfigBuilder() {
+    }
+
     /**
      * 作者。
      */
@@ -60,6 +76,11 @@ public class JavadocConfigBuilder {
     private String tableDefPackage = "表定义层（TableDef）软件包。";
 
 
+    /**
+     * Builds and applies the javadoc configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with javadoc settings
+     */
     public void build(GlobalConfig globalConfig){
         JavadocConfig javadocConfig = globalConfig.getJavadocConfig();
         if (StringUtils.isNotBlank(author))

@@ -24,9 +24,24 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * A simple 'hello world' plugin.
+ * Gradle plugin for MyBatis Flex code generation.
+ *
+ * This plugin provides automated code generation capabilities for MyBatis Flex, including
+ * Entity, Mapper, Service, ServiceImpl, Controller, and TableDef classes. It integrates with
+ * Flyway for database migration management and supports multiple independent configurations
+ * through the {@link MyBatisExtension}.
+ *
+ * @see MyBatisExtension
+ * @see GlobalConfigBuilder
+ * @see MyBatisGenerateTask
  */
 public class MyBatisFlexGradlePlugin implements Plugin<Project> {
+    /**
+     * Constructs a new {@code MyBatisFlexGradlePlugin}.
+     */
+    public MyBatisFlexGradlePlugin() {
+    }
+
     public void apply(Project project) {
         project.getPlugins().apply(JavaBasePlugin.class);
 

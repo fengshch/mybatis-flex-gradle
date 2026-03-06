@@ -27,7 +27,7 @@ apply {
 group = 'example'
 version = 'unspecified'
 java {
-    sourceCompatibility = '21'
+    sourceCompatibility = '25'
 }
 
 configurations {
@@ -47,8 +47,8 @@ mybatis {
             }
             strategyConfig {
 //                generateSchema="PUBLIC"
-                unGenerateTables = ['flyway_schema_history']
-//                unGenerateTables = ['flyway_schema_history','CONSTANTS', 'ENUM_VALUES', 'INDEXES', 'INDEX_COLUMNS', "INFORMATION_SCHEMA_CATALOG_NAME",  "IN_DOUBT" , "LOCKS", "QUERY_STATISTICS" ,"RIGHTS", "ROLES", "SESSIONS", "SESSION_STATE", "SETTINGS", "SYNONYMS"  ]
+//                unGenerateTables = ['flyway_schema_history']
+                unGenerateTables = ['flyway_schema_history','CONSTANTS', 'ENUM_VALUES', 'INDEXES', 'INDEX_COLUMNS', "INFORMATION_SCHEMA_CATALOG_NAME",  "IN_DOUBT" , "LOCKS", "QUERY_STATISTICS" ,"RIGHTS", "ROLES", "SESSIONS", "SESSION_STATE", "SETTINGS", "SYNONYMS"  ]
             }
             flyway {
                 cleanDisabled = false

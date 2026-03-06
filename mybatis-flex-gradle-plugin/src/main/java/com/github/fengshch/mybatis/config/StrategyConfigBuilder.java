@@ -7,8 +7,23 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Builder class for configuring code generation strategy settings.
+ *
+ * This class configures table selection strategies, naming conventions, special columns
+ * (logical delete, version fields), and generation filters for the code generator.
+ *
+ * @see GlobalConfigBuilder
+ * @see StrategyConfig
+ */
 @Data
 public class StrategyConfigBuilder {
+    /**
+     * Constructs a new {@code StrategyConfigBuilder} with default settings.
+     */
+    public StrategyConfigBuilder() {
+    }
+
     /**
      * 数据库表前缀，多个前缀用英文逗号（,） 隔开。
      */
@@ -72,6 +87,11 @@ public class StrategyConfigBuilder {
 
 
 
+    /**
+     * Builds and applies the strategy configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with strategy settings
+     */
     public void build(GlobalConfig globalConfig) {
         StrategyConfig strategyConfig = globalConfig.getStrategyConfig();
         if (StringUtils.isNotBlank(tablePrefix)) {

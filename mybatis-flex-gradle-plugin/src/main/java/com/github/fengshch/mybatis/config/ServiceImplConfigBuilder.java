@@ -5,8 +5,23 @@ import com.mybatisflex.codegen.config.ServiceImplConfig;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Builder class for configuring Service implementation code generation settings.
+ *
+ * This class configures the generation of service implementation classes, including
+ * naming conventions, inheritance, output paths, and cache example code generation.
+ *
+ * @see GlobalConfigBuilder
+ * @see ServiceImplConfig
+ */
 @Data
 public class ServiceImplConfigBuilder {
+
+    /**
+     * Constructs a new {@code ServiceImplConfigBuilder} with default settings.
+     */
+    public ServiceImplConfigBuilder() {
+    }
 
     /**
      * 代码生成目录，当未配置时，使用 PackageConfig 的配置
@@ -37,6 +52,11 @@ public class ServiceImplConfigBuilder {
      */
     private boolean cacheExample = false;
 
+    /**
+     * Builds and applies the service implementation configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with service implementation settings
+     */
     public void build(GlobalConfig globalConfig) {
         ServiceImplConfig serviceImplConfig = globalConfig.getServiceImplConfig();
 

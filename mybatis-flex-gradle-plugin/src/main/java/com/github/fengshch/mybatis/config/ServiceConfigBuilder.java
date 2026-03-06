@@ -5,8 +5,23 @@ import com.mybatisflex.codegen.config.ServiceConfig;
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
+/**
+ * Builder class for configuring Service interface code generation settings.
+ *
+ * This class configures the generation of service interface classes, including
+ * naming conventions, inheritance, output paths, and overwrite options.
+ *
+ * @see GlobalConfigBuilder
+ * @see ServiceConfig
+ */
 @Data
 public class ServiceConfigBuilder {
+    /**
+     * Constructs a new {@code ServiceConfigBuilder} with default settings.
+     */
+    public ServiceConfigBuilder() {
+    }
+
     /**
      * 代码生成目录，当未配置时，使用 PackageConfig 的配置
      */
@@ -32,6 +47,11 @@ public class ServiceConfigBuilder {
      */
     private boolean overwriteEnable = false;
 
+    /**
+     * Builds and applies the service configuration to the global config.
+     *
+     * @param globalConfig the {@link GlobalConfig} to update with service settings
+     */
     public void build(GlobalConfig globalConfig) {
         ServiceConfig serviceConfig = globalConfig.getServiceConfig();
 

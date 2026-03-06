@@ -17,14 +17,14 @@ import lombok.NoArgsConstructor;
  *  实体类。
  *
  * @author bill
- * @since 2024-12-10
+ * @since 2026-03-06
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table("USERS")
-public class UsersPo implements Serializable {
+public class UsersPO implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
