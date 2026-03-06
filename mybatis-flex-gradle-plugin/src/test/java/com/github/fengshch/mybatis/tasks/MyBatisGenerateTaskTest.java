@@ -28,7 +28,7 @@ class MyBatisGenerateTaskTest {
 
     @Test
     void testTaskCreation() {
-        MyBatisGenerateTask task = project.getTasks().create("testGenerate", MyBatisGenerateTask.class, globalConfigBuilder);
+        MyBatisGenerateTask task = project.getTasks().register("testGenerate", MyBatisGenerateTask.class, globalConfigBuilder).get();
         assertNotNull(task);
         assertEquals("testGenerate", task.getName());
         assertEquals("mybatis", task.getGroup());
@@ -57,7 +57,7 @@ class MyBatisGenerateTaskTest {
         globalConfigBuilder.getPackageConfigBuilder().setSourceDir("src/batis/java");
         globalConfigBuilder.getPackageConfigBuilder().setBasePackage("com.example");
 
-        MyBatisGenerateTask task = project.getTasks().create("testGenerate", MyBatisGenerateTask.class, globalConfigBuilder);
+        MyBatisGenerateTask task = project.getTasks().register("testGenerate", MyBatisGenerateTask.class, globalConfigBuilder).get();
 
         assertNotNull(task);
         assertEquals("src/batis/java", globalConfigBuilder.getPackageConfigBuilder().getSourceDir());
