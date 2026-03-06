@@ -34,6 +34,7 @@ This is a composite build with the plugin in `mybatis-flex-gradle-plugin/` as an
 **Plugin Entry**: `MyBatisFlexGradlePlugin.java`
 - Applies JavaBasePlugin
 - Creates `mybatis` and `flyway` extensions
+- **Loads configurations from mybatis-flex.yml** (if exists) before processing build.gradle configurations
 - Registers generation and Flyway tasks
 - Reads datasource config from YAML files (application.yml, mybatis-flex.yml)
 - Supports Spring profiles: dev, test, default (via `-Pprofile=<name>` or PROFILE env var)
@@ -61,7 +62,8 @@ This is a composite build with the plugin in `mybatis-flex-gradle-plugin/` as an
 ### Configuration Flow
 
 1. Plugin creates `mybatis` extension with named configurations
-2. In `afterEvaluate`, for each configuration:
+2. **Loads configurations from `src/main/resources/mybatis-flex.yml`** if the file exists
+3. In `afterEvaluate`, for each configuration:
    - Reads datasource config from YAML (supports spring.datasource structure)
    - Creates `mybatis<Name>Generate` task
    - Registers Flyway tasks
@@ -102,6 +104,66 @@ spring:
     secondary:
       url: ...
 ```
+
+### MyBatis Flex Configuration (mybatis-flex.yml)
+
+You can define all MyBatis Flex configurations in `src/main/resources/mybatis-flex.yml` instead of in `build.gradle`. This provides a cleaner separation of configuration from build logic.
+
+Example `mybatis-flex.yml`:
+```yaml
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/h2db
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+
+mybatis-flex:
+  configurations:
+    main:
+      controllerGenerateEnable: true
+      entityGenerateEnable: true
+      mapperGenerateEnable: true
+      serviceGenerateEnable: false
+      serviceImplGenerateEnable: false
+      tableDefGenerateEnable: true
+      mapperXmlGenerateEnable: false
+
+      packageConfig:
+        sourceDir: src/batis/java
+        basePackage: com.example.mybatis
+        entityPackage: po
+        mapperPackage: mapper
+        servicePackage: service
+        serviceImplPackage: service.impl
+        controllerPackage: controller
+        tableDefPackage: table
+        mapperXmlPath: src/main/resources/mapper
+
+      strategyConfig:
+        tablePrefix: tb_
+        logicDeleteColumn: deleted
+        versionColumn: version
+        generateForView: false
+        generateSchema: PUBLIC
+        unGenerateTables:
+          - flyway_schema_history
+          - CONSTANTS
+          - ENUM_VALUES
+          - INDEXES
+
+      flyway:
+        cleanDisabled: false
+        locations:
+          - classpath:db/migration
+        baselineVersion: "1.0"
+        baselineDescription: Initial baseline
+        table: flyway_schema_history
+        schemas:
+          - public
+```
+
+**Note**: Configurations in `build.gradle` will override those in `mybatis-flex.yml` if both are present.
 
 ### Special Handling
 

@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:h2:file:./data/h2db
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+
+mybatis-flex:
+  configurations:
+    main:
+      controllerGenerateEnable: true
+      packageConfig:
+        sourceDir: src/batis/java
+        basePackage: com.example.mybatis
+      strategyConfig:
+        unGenerateTables:
+          - flyway_schema_history
+          - CONSTANTS
+          - ENUM_VALUES
+          - INDEXES
+          - INDEX_COLUMNS
+          - INFORMATION_SCHEMA_CATALOG_NAME
+          - IN_DOUBT
+          - LOCKS
+          - QUERY_STATISTICS
+          - RIGHTS
+          - ROLES
+          - SESSIONS
+          - SESSION_STATE
+          - SETTINGS
+          - SYNONYMS
+      flyway:
+        cleanDisabled: false

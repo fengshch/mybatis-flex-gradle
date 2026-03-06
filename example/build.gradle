@@ -36,28 +36,8 @@ configurations {
     }
 }
 
-//unGenerateTables = ['flyway_schema_history','CONSTANTS', 'ENUM_VALUES', 'INDEXES', 'INDEX_COLUMNS', "INFORMATION_SCHEMA_CATALOG_NAME",  "IN_DOUBT" , "LOCKS", "QUERY_STATISTICS" ,"RIGHTS", "ROLES", "SESSIONS", "SESSION_STATE", "SETTINGS", "SYNONYMS"  ]
-mybatis {
-    configurations {
-        main {
-            controllerGenerateEnable = true
-            packageConfig {
-                sourceDir = 'src/batis/java'
-                basePackage = 'com.example.mybatis'
-            }
-            strategyConfig {
-//                generateSchema="PUBLIC"
-//                unGenerateTables = ['flyway_schema_history']
-                unGenerateTables = ['flyway_schema_history','CONSTANTS', 'ENUM_VALUES', 'INDEXES', 'INDEX_COLUMNS', "INFORMATION_SCHEMA_CATALOG_NAME",  "IN_DOUBT" , "LOCKS", "QUERY_STATISTICS" ,"RIGHTS", "ROLES", "SESSIONS", "SESSION_STATE", "SETTINGS", "SYNONYMS"  ]
-            }
-            flyway {
-                cleanDisabled = false
-//                locations = ['classpath:db/migration']
-//                locations = ['classpath:db/flyway']
-            }
-        }
-    }
-}
+// MyBatis Flex configuration is now in src/main/resources/mybatis-flex.yml
+// You can still override or add configurations here if needed
 
 repositories {
     mavenLocal()

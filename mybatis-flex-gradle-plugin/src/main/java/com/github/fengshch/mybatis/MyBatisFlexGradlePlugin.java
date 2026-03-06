@@ -48,6 +48,9 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         MyBatisExtension myBatisExtension = project.getExtensions().create("mybatis", MyBatisExtension.class);
         project.getExtensions().create("flyway", FlywayExtension.class);
 
+        // Load configurations from mybatis-flex.yml if it exists
+        loadConfigurationsFromYaml(project, myBatisExtension);
+
         project.afterEvaluate(p -> {
             System.out.println("mybatis: " + myBatisExtension.getConfigurations().getNames());
             myBatisExtension.getConfigurations().forEach(globalConfigBuilder -> {
@@ -77,6 +80,174 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         String name = globalConfigBuilder.getName().equals("main") ? "" : globalConfigBuilder.getName();
         String taskName = "mybatis%sGenerate".formatted(StringUtils.capitalize(name));
         project.getTasks().register(taskName, MyBatisGenerateTask.class, globalConfigBuilder);
+    }
+
+    /**
+     * Loads MyBatis Flex configurations from mybatis-flex.yml file if it exists.
+     * This allows users to define configurations in YAML instead of build.gradle.
+     *
+     * @param project the Gradle project
+     * @param myBatisExtension the MyBatis extension to populate with configurations
+     */
+    @SuppressWarnings("unchecked")
+    private void loadConfigurationsFromYaml(Project project, MyBatisExtension myBatisExtension) {
+        File flexConfigFile = project.file("src/main/resources/mybatis-flex.yml");
+        if (!flexConfigFile.exists()) {
+            return;
+        }
+
+        try (FileInputStream yamlStream = new FileInputStream(flexConfigFile)) {
+            Yaml yaml = new Yaml();
+            Map<String, Object> props = yaml.load(yamlStream);
+
+            if (props == null) {
+                return;
+            }
+
+            Map<String, Object> mybatisFlexConfig = (Map<String, Object>) props.get("mybatis-flex");
+            if (mybatisFlexConfig == null) {
+                return;
+            }
+
+            Map<String, Object> configurations = (Map<String, Object>) mybatisFlexConfig.get("configurations");
+            if (configurations == null) {
+                return;
+            }
+
+            // Process each configuration
+            for (Map.Entry<String, Object> entry : configurations.entrySet()) {
+                String configName = entry.getKey();
+                Map<String, Object> configData = (Map<String, Object>) entry.getValue();
+
+                GlobalConfigBuilder configBuilder = myBatisExtension.getConfigurations().create(configName);
+                applyYamlConfiguration(configBuilder, configData);
+            }
+        } catch (Exception e) {
+            project.getLogger().warn("Failed to load mybatis-flex.yml: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Applies YAML configuration data to a GlobalConfigBuilder.
+     *
+     * @param configBuilder the configuration builder to populate
+     * @param configData the YAML configuration data
+     */
+    @SuppressWarnings("unchecked")
+    private void applyYamlConfiguration(GlobalConfigBuilder configBuilder, Map<String, Object> configData) {
+        // Apply generation enable flags
+        if (configData.containsKey("controllerGenerateEnable")) {
+            configBuilder.setControllerGenerateEnable((Boolean) configData.get("controllerGenerateEnable"));
+        }
+        if (configData.containsKey("entityGenerateEnable")) {
+            configBuilder.setEntityGenerateEnable((Boolean) configData.get("entityGenerateEnable"));
+        }
+        if (configData.containsKey("mapperGenerateEnable")) {
+            configBuilder.setMapperGenerateEnable((Boolean) configData.get("mapperGenerateEnable"));
+        }
+        if (configData.containsKey("serviceGenerateEnable")) {
+            configBuilder.setServiceGenerateEnable((Boolean) configData.get("serviceGenerateEnable"));
+        }
+        if (configData.containsKey("serviceImplGenerateEnable")) {
+            configBuilder.setServiceImplGenerateEnable((Boolean) configData.get("serviceImplGenerateEnable"));
+        }
+        if (configData.containsKey("tableDefGenerateEnable")) {
+            configBuilder.setTableDefGenerateEnable((Boolean) configData.get("tableDefGenerateEnable"));
+        }
+        if (configData.containsKey("mapperXmlGenerateEnable")) {
+            configBuilder.setMapperXmlGenerateEnable((Boolean) configData.get("mapperXmlGenerateEnable"));
+        }
+
+        // Apply package configuration
+        if (configData.containsKey("packageConfig")) {
+            Map<String, Object> packageConfig = (Map<String, Object>) configData.get("packageConfig");
+            if (packageConfig.containsKey("sourceDir")) {
+                configBuilder.getPackageConfigBuilder().setSourceDir((String) packageConfig.get("sourceDir"));
+            }
+            if (packageConfig.containsKey("basePackage")) {
+                configBuilder.getPackageConfigBuilder().setBasePackage((String) packageConfig.get("basePackage"));
+            }
+            if (packageConfig.containsKey("entityPackage")) {
+                configBuilder.getPackageConfigBuilder().setEntityPackage((String) packageConfig.get("entityPackage"));
+            }
+            if (packageConfig.containsKey("mapperPackage")) {
+                configBuilder.getPackageConfigBuilder().setMapperPackage((String) packageConfig.get("mapperPackage"));
+            }
+            if (packageConfig.containsKey("servicePackage")) {
+                configBuilder.getPackageConfigBuilder().setServicePackage((String) packageConfig.get("servicePackage"));
+            }
+            if (packageConfig.containsKey("serviceImplPackage")) {
+                configBuilder.getPackageConfigBuilder().setServiceImplPackage((String) packageConfig.get("serviceImplPackage"));
+            }
+            if (packageConfig.containsKey("controllerPackage")) {
+                configBuilder.getPackageConfigBuilder().setControllerPackage((String) packageConfig.get("controllerPackage"));
+            }
+            if (packageConfig.containsKey("tableDefPackage")) {
+                configBuilder.getPackageConfigBuilder().setTableDefPackage((String) packageConfig.get("tableDefPackage"));
+            }
+            if (packageConfig.containsKey("mapperXmlPath")) {
+                configBuilder.getPackageConfigBuilder().setMapperXmlPath((String) packageConfig.get("mapperXmlPath"));
+            }
+        }
+
+        // Apply strategy configuration
+        if (configData.containsKey("strategyConfig")) {
+            Map<String, Object> strategyConfig = (Map<String, Object>) configData.get("strategyConfig");
+            if (strategyConfig.containsKey("tablePrefix")) {
+                configBuilder.getStrategyConfigBuilder().setTablePrefix((String) strategyConfig.get("tablePrefix"));
+            }
+            if (strategyConfig.containsKey("logicDeleteColumn")) {
+                configBuilder.getStrategyConfigBuilder().setLogicDeleteColumn((String) strategyConfig.get("logicDeleteColumn"));
+            }
+            if (strategyConfig.containsKey("versionColumn")) {
+                configBuilder.getStrategyConfigBuilder().setVersionColumn((String) strategyConfig.get("versionColumn"));
+            }
+            if (strategyConfig.containsKey("generateForView")) {
+                configBuilder.getStrategyConfigBuilder().setGenerateForView((Boolean) strategyConfig.get("generateForView"));
+            }
+            if (strategyConfig.containsKey("unGenerateTables")) {
+                List<String> tables = (List<String>) strategyConfig.get("unGenerateTables");
+                configBuilder.getStrategyConfigBuilder().setUnGenerateTables(tables.toArray(new String[0]));
+            }
+            if (strategyConfig.containsKey("generateSchema")) {
+                configBuilder.getStrategyConfigBuilder().setGenerateSchema((String) strategyConfig.get("generateSchema"));
+            }
+        }
+
+        // Apply Flyway configuration
+        if (configData.containsKey("flyway")) {
+            Map<String, Object> flywayConfig = (Map<String, Object>) configData.get("flyway");
+            FlywayExtension flywayExtension = configBuilder.getFlywayExtension();
+
+            if (flywayConfig.containsKey("cleanDisabled")) {
+                flywayExtension.cleanDisabled = (Boolean) flywayConfig.get("cleanDisabled");
+            }
+            if (flywayConfig.containsKey("locations")) {
+                Object locations = flywayConfig.get("locations");
+                if (locations instanceof List) {
+                    flywayExtension.locations = ((List<String>) locations).toArray(new String[0]);
+                } else if (locations instanceof String) {
+                    flywayExtension.locations = new String[]{(String) locations};
+                }
+            }
+            if (flywayConfig.containsKey("baselineVersion")) {
+                flywayExtension.baselineVersion = (String) flywayConfig.get("baselineVersion");
+            }
+            if (flywayConfig.containsKey("baselineDescription")) {
+                flywayExtension.baselineDescription = (String) flywayConfig.get("baselineDescription");
+            }
+            if (flywayConfig.containsKey("table")) {
+                flywayExtension.table = (String) flywayConfig.get("table");
+            }
+            if (flywayConfig.containsKey("schemas")) {
+                Object schemas = flywayConfig.get("schemas");
+                if (schemas instanceof List) {
+                    flywayExtension.schemas = ((List<String>) schemas).toArray(new String[0]);
+                } else if (schemas instanceof String) {
+                    flywayExtension.schemas = new String[]{(String) schemas};
+                }
+            }
+        }
     }
 
 
