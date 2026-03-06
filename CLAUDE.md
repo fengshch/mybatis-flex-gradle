@@ -6,8 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a Gradle plugin for MyBatis Flex code generation. It wraps the MyBatis Flex codegen library to provide Gradle integration and includes Flyway database migration support.
 
-Plugin ID: `com.github.fengshch.mybatis-flex-gradle-plugin`
-Main class: `com.github.fengshch.mybatis.MyBatisFlexGradlePlugin`
+Plugin ID: `io.github.fengshch.mybatis-flex-gradle-plugin`
+Main class: `io.github.fengshch.mybatis.MyBatisFlexGradlePlugin`
 
 ## Build Commands
 

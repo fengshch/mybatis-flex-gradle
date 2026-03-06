@@ -23,7 +23,7 @@ A Gradle plugin for [MyBatis Flex](https://mybatis-flex.com/) code generation wi
 
 ```gradle
 plugins {
-    id 'com.github.fengshch.mybatis-flex-gradle-plugin' version '+'
+    id 'io.github.fengshch.mybatis-flex-gradle-plugin' version '+'
 }
 ```
 
@@ -35,11 +35,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.github.fengshch:mybatis-flex-gradle-plugin:+'
+        classpath 'io.github.fengshch:mybatis-flex-gradle-plugin:+'
     }
 }
 
-apply plugin: 'com.github.fengshch.mybatis-flex-gradle-plugin'
+apply plugin: 'io.github.fengshch.mybatis-flex-gradle-plugin'
 ```
 
 ### 2. Configure Database Connection

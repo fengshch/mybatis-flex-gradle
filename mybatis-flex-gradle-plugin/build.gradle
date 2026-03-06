@@ -9,6 +9,7 @@ plugins {
     // Apply the Java Gradle plugin development plugin to add support for developing Gradle plugins
     id 'java-gradle-plugin'
     id 'maven-publish'
+    id 'com.gradle.plugin-publish' version '1.3.0'
     id 'idea'
 }
 
@@ -58,50 +59,21 @@ dependencies {
 }
 
 gradlePlugin {
+    website = 'https://github.com/fengshch/mybatis-flex-gradle'
+    vcsUrl = 'https://github.com/fengshch/mybatis-flex-gradle.git'
+
     plugins {
-        greeting {
-            id = 'com.github.fengshch.mybatis-flex-gradle-plugin'
-            implementationClass = 'com.github.fengshch.mybatis.MyBatisFlexGradlePlugin'
+        myPlugin {
+            id = 'io.github.fengshch.mybatis-flex-gradle-plugin'
+            implementationClass = 'io.github.fengshch.mybatis.MyBatisFlexGradlePlugin'
+            displayName = 'MyBatis Flex Gradle Plugin'
+            description = 'A Gradle plugin for MyBatis Flex code generation with Flyway database migration support. Supports YAML configuration, multiple datasources, and automatic code generation for entities, mappers, services, and controllers.'
+            tags.set(['mybatis', 'mybatis-flex', 'code-generation', 'flyway', 'database'])
         }
     }
 }
 
 publishing {
-//    publications {
-//        create("mavenJava", MavenPublication) {
-//            from components.java
-//
-////            // Ensure sourcesJar and javadocJar tasks exist
-////            artifact(tasks.named("sourcesJar"))
-////            artifact(tasks.named("javadocJar"))
-//
-//            // Custom POM
-//            pom {
-//                name.set("MyBatis Flex Gradle Plugin")
-//                description.set("A Gradle plugin for MyBatis Flex code generation")
-//                url.set("https://github.com/fengshch/mybatis-flex-gradle-plugin")
-//
-//                licenses {
-//                    license {
-//                        name.set("Apache-2.0")
-//                        url.set("https://opensource.org/licenses/Apache-2.0")
-//                    }
-//                }
-//                developers {
-//                    developer {
-//                        id.set("fengshch")
-//                        name.set("Bill Feng")
-//                        email.set("fengshch@gmail.com")
-//                    }
-//                }
-//                scm {
-//                    connection.set("scm:git:git://github.com/fengshch/mybatis-flex-gradle-plugin.git")
-//                    developerConnection.set("scm:git:ssh://github.com/fengshch/mybatis-flex-gradle-plugin.git")
-//                    url.set("https://github.com/fengshch/mybatis-flex-gradle-plugin")
-//                }
-//            }
-//        }
-//    }
     repositories {
         maven {
             name = "maven-release"
