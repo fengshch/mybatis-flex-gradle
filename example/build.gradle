@@ -1,0 +1,70 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven{
+            url = "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath(libs.springBootGradlePlugin)
+        classpath(libs.springDependencyManagementPlugin)
+        classpath 'io.github.fengshch:mybatis-flex-gradle-plugin:+'
+//        classpath "org.postgresql:postgresql:42.7.1"
+//        classpath 'com.mysql:mysql-connector-j:8.3.0'
+        classpath(libs.h2)
+//        classpath(libs.flywayMysql)
+    }
+}
+plugins {
+    id 'java'
+}
+
+apply {
+    plugin 'io.github.fengshch.mybatis-flex-gradle-plugin'
+    plugin('org.springframework.boot')
+    plugin('io.spring.dependency-management')
+}
+group = 'example'
+version = 'unspecified'
+java {
+    sourceCompatibility = '25'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+// MyBatis Flex configuration is now in src/main/resources/mybatis-flex.yml
+// You can still override or add configurations here if needed
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation(libs.mybatisFlexSpringBootStarter)
+   {
+        exclude group: 'org.mybatis', module: 'mybatis-spring'
+    }
+    implementation(libs.mybatisSpring)
+
+    implementation(libs.hikariCP)
+    runtimeOnly(libs.h2)
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor "org.projectlombok:lombok"
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+//tasks.named("bootRun").configure {
+//    systemProperty("spring.profiles.active",findProperty("spring.profiles.active")?:'dev')
+//}

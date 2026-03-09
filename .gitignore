@@ -1,0 +1,39 @@
+# Ignore Gradle build files
+.gradle/
+build/
+gradle/
+gradlew
+gradlew.bat
+
+# Ignore IDEA project files
+.idea/
+
+# Ignore database files
+data/
+
+# Ignore all files in the example/build directory
+**/build/
+
+# Ignore common build files
+*.class
+*.jar
+*.war
+*.ear
+
+# Ignore operating system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+*.old
+
+# Ignore user-specific settings
+*.iml
+*.ipr
+*.iws

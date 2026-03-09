@@ -1,0 +1,13 @@
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from(files("./libs.versions.toml"))
+        }
+    }
+}
+
+rootProject.name = 'mybatis-flex-gradle'
+includeBuild('mybatis-flex-gradle-plugin')
+include 'example'
+
