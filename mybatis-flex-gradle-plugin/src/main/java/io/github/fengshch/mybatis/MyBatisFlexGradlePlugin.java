@@ -77,6 +77,7 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
     }
 
     private void createGenerateTask(Project project, GlobalConfigBuilder globalConfigBuilder) {
+        globalConfigBuilder.getPackageConfigBuilder().setProjectDir(project.getProjectDir().getAbsolutePath());
         String name = globalConfigBuilder.getName().equals("main") ? "" : globalConfigBuilder.getName();
         String taskName = "mybatis%sGenerate".formatted(StringUtils.capitalize(name));
         project.getTasks().register(taskName, MyBatisGenerateTask.class, globalConfigBuilder);
@@ -253,17 +254,32 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
 
     @SuppressWarnings("unchecked")
     private void configDatasource(Project project, GlobalConfigBuilder globalConfigBuilder) {
-        String profile = getProfile(project);
         DataSourceConfigBuilder dataSourceConfig = globalConfigBuilder.getDataSourceConfigBuilder();
-        File configFile = getConfigFile(project, profile);
+        Map<String, String> datasource = resolveDatasource(project, globalConfigBuilder.getName(), dataSourceConfig);
+        setConfigFromMap(dataSourceConfig, datasource);
+    }
 
-        Map<String, Object> datasource = readDataSourceConfig(configFile);
-        datasource = configH2Datasource(datasource, project);
-        setConfigFromMap(dataSourceConfig, "main".equals(globalConfigBuilder.getName()) ? Objects.requireNonNull(datasource) : (Map<String, Object>) Objects.requireNonNull(datasource).get(globalConfigBuilder.getName()));
+    Map<String, String> resolveDatasource(Project project, String configName, DataSourceConfigBuilder existingConfig) {
+        String profile = getProfile(project);
+        Map<String, String> datasource = new LinkedHashMap<>();
+        mergeDatasource(datasource, getExistingDatasource(existingConfig));
+        mergeDatasourceIfMissing(datasource, readYamlDatasource(project.file("src/main/resources/mybatis-flex.yml"), configName));
+
+        for (File file : getApplicationYamlFiles(project, profile)) {
+            mergeDatasourceIfMissing(datasource, readYamlDatasource(file, configName));
+        }
+        for (File file : getApplicationPropertiesFiles(project, profile)) {
+            mergeDatasourceIfMissing(datasource, readPropertiesDatasource(file, configName));
+        }
+
+        return configH2Datasource(datasource, project);
     }
 
     @SuppressWarnings("unchecked")
-    private Map<String, Object> readDataSourceConfig(File configFile) {
+    private Map<String, Object> readSpringDatasource(File configFile) {
+        if (!configFile.exists()) {
+            return null;
+        }
         try (FileInputStream yamlStream = new FileInputStream(configFile)) {
             Yaml yaml = new Yaml();
             Iterable<Object> documents = yaml.loadAll(yamlStream);
@@ -280,7 +296,7 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Failed to read YAML file", e);
+            throw new RuntimeException("Failed to read YAML file: " + configFile.getAbsolutePath(), e);
         }
         return null;
     }
@@ -292,31 +308,23 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         return System.getenv("PROFILE") != null ? System.getenv("PROFILE") : "default";
     }
 
-    private File getConfigFile(Project project, String profile) {
-        File flexConfigFile = project.file("src/main/resources/mybatis-flex.yml");
-        if (flexConfigFile.exists()) return flexConfigFile;
-
-        Map<String, String> pathsMap = getStringStringMap();
-        return project.file(pathsMap.get(profile));
+    private List<File> getApplicationYamlFiles(Project project, String profile) {
+        List<File> files = new ArrayList<>();
+        if (!"default".equals(profile)) {
+            files.add(project.file("src/main/resources/application-" + profile + ".yml"));
+        }
+        files.add(project.file("src/main/resources/application.yml"));
+        return files;
     }
 
-    @NotNull
-    private static Map<String, String> getStringStringMap() {
-        Map<String, String> pathsMap = new HashMap<>();
-        pathsMap.put("default", "src/main/resources/application.yml");
-        pathsMap.put("dev", "src/main/resources/application-dev.yml");
-        pathsMap.put("test", "src/main/resources/application-test.yml");
-        return pathsMap;
+    private List<File> getApplicationPropertiesFiles(Project project, String profile) {
+        List<File> files = new ArrayList<>();
+        if (!"default".equals(profile)) {
+            files.add(project.file("src/main/resources/application-" + profile + ".properties"));
+        }
+        files.add(project.file("src/main/resources/application.properties"));
+        return files;
     }
-
-//    private Iterable<Object> loadYaml(File file) {
-//        Yaml yaml = new Yaml();
-//        try (FileInputStream fis = new FileInputStream(file)) {
-//            return yaml.loadAll(fis);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
     private Properties loadProperties(File file) throws IOException {
         Properties properties = new Properties();
@@ -326,18 +334,50 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         return properties;
     }
 
-    private void setConfigFromMap(DataSourceConfigBuilder config, Map<String, Object> datasource) {
-        config.setDriverClassName(String.valueOf(datasource.getOrDefault("driverClassName", datasource.get("driver-class-name"))));
-        config.setUrl(String.valueOf(datasource.get("url")));
-        config.setUsername(String.valueOf(datasource.get("username")));
-        config.setPassword(String.valueOf(datasource.get("password")));
+    private Map<String, String> readYamlDatasource(File configFile, String configName) {
+        return extractDatasource(readSpringDatasource(configFile), configName);
     }
 
-    private void setConfigFromProperties(DataSourceConfigBuilder config, Properties properties, String prefix) {
-        config.setDriverClassName(properties.getProperty(prefix + ".driverClassName", properties.getProperty(prefix + ".driver-class-name")));
-        config.setUrl(properties.getProperty(prefix + ".url"));
-        config.setUsername(properties.getProperty(prefix + ".username"));
-        config.setPassword(properties.getProperty(prefix + ".password"));
+    private Map<String, String> readPropertiesDatasource(File configFile, String configName) {
+        if (!configFile.exists()) {
+            return null;
+        }
+        try {
+            Properties properties = loadProperties(configFile);
+            Map<String, String> datasource = extractDatasource(properties, "spring.datasource");
+            if (!datasource.isEmpty()) {
+                return datasource;
+            }
+
+            if (!"main".equals(configName)) {
+                datasource = extractDatasource(properties, "spring.datasource." + configName);
+                if (!datasource.isEmpty()) {
+                    return datasource;
+                }
+            } else {
+                datasource = extractDatasource(properties, "spring.datasource.main");
+                if (!datasource.isEmpty()) {
+                    return datasource;
+                }
+            }
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read properties file: " + configFile.getAbsolutePath(), e);
+        }
+    }
+
+    private void setConfigFromMap(DataSourceConfigBuilder config, Map<String, String> datasource) {
+        if (datasource == null) {
+            return;
+        }
+        if (StringUtils.isNotBlank(datasource.get("driverClassName")))
+            config.setDriverClassName(datasource.get("driverClassName"));
+        if (StringUtils.isNotBlank(datasource.get("url")))
+            config.setUrl(datasource.get("url"));
+        if (StringUtils.isNotBlank(datasource.get("username")))
+            config.setUsername(datasource.get("username"));
+        if (StringUtils.isNotBlank(datasource.get("password")))
+            config.setPassword(datasource.get("password"));
     }
 
     private void applyFlywayTask(Project project, GlobalConfigBuilder globalConfigBuilder, FlywayExtension
@@ -376,13 +416,22 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
             }
 
         }
+        File propertiesFile = project.file("src/main/resources/application.properties");
+        if (propertiesFile.exists()) {
+            try {
+                Properties properties = loadProperties(propertiesFile);
+                return properties.getProperty("spring.profiles.active");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         return null;
     }
 
-    private Map<String, Object> configH2Datasource(Map<String, Object> datasource, Project project) {
-        if (datasource == null)
+    private Map<String, String> configH2Datasource(Map<String, String> datasource, Project project) {
+        if (datasource == null || StringUtils.isBlank(datasource.get("url")))
             return null;
-        String url = (String) datasource.get("url");
+        String url = datasource.get("url");
         if (url.contains("jdbc:h2:file:./")) {
             String path = project.getProjectDir().getAbsolutePath();
             url = url.replace("jdbc:h2:file:./", "jdbc:h2:file:" + path + "/");
@@ -393,5 +442,95 @@ public class MyBatisFlexGradlePlugin implements Plugin<Project> {
         }
         datasource.put("url", url);
         return datasource;
+    }
+
+    private Map<String, String> getExistingDatasource(DataSourceConfigBuilder config) {
+        Map<String, String> datasource = new LinkedHashMap<>();
+        putIfPresent(datasource, "driverClassName", config.getDriverClassName());
+        putIfPresent(datasource, "url", config.getUrl());
+        putIfPresent(datasource, "username", config.getUsername());
+        putIfPresent(datasource, "password", config.getPassword());
+        return datasource;
+    }
+
+    @SuppressWarnings("unchecked")
+    private Map<String, String> extractDatasource(Map<String, Object> datasourceRoot, String configName) {
+        if (datasourceRoot == null) {
+            return null;
+        }
+
+        Map<String, Object> selected = datasourceRoot;
+        if (!containsDatasourceKeys(datasourceRoot)) {
+            Object namedDatasource = datasourceRoot.get(configName);
+            if (namedDatasource instanceof Map<?, ?> map) {
+                selected = (Map<String, Object>) map;
+            } else if ("main".equals(configName)) {
+                Object mainDatasource = datasourceRoot.get("main");
+                if (mainDatasource instanceof Map<?, ?> map) {
+                    selected = (Map<String, Object>) map;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
+
+        Map<String, String> datasource = new LinkedHashMap<>();
+        putIfPresent(datasource, "driverClassName", firstNonBlank(selected.get("driverClassName"), selected.get("driver-class-name")));
+        putIfPresent(datasource, "url", selected.get("url"));
+        putIfPresent(datasource, "username", selected.get("username"));
+        putIfPresent(datasource, "password", selected.get("password"));
+        return datasource.isEmpty() ? null : datasource;
+    }
+
+    private Map<String, String> extractDatasource(Properties properties, String prefix) {
+        Map<String, String> datasource = new LinkedHashMap<>();
+        putIfPresent(datasource, "driverClassName", firstNonBlank(properties.getProperty(prefix + ".driverClassName"), properties.getProperty(prefix + ".driver-class-name")));
+        putIfPresent(datasource, "url", properties.getProperty(prefix + ".url"));
+        putIfPresent(datasource, "username", properties.getProperty(prefix + ".username"));
+        putIfPresent(datasource, "password", properties.getProperty(prefix + ".password"));
+        return datasource;
+    }
+
+    private void mergeDatasource(Map<String, String> target, Map<String, String> source) {
+        if (source == null) {
+            return;
+        }
+        source.forEach((key, value) -> putIfPresent(target, key, value));
+    }
+
+    private void mergeDatasourceIfMissing(Map<String, String> target, Map<String, String> source) {
+        if (source == null) {
+            return;
+        }
+        source.forEach((key, value) -> {
+            if (StringUtils.isBlank(target.get(key))) {
+                putIfPresent(target, key, value);
+            }
+        });
+    }
+
+    private boolean containsDatasourceKeys(Map<String, Object> datasource) {
+        return datasource.containsKey("url")
+                || datasource.containsKey("username")
+                || datasource.containsKey("password")
+                || datasource.containsKey("driverClassName")
+                || datasource.containsKey("driver-class-name");
+    }
+
+    private void putIfPresent(Map<String, String> target, String key, Object value) {
+        String resolvedValue = value == null ? null : String.valueOf(value);
+        if (StringUtils.isNotBlank(resolvedValue)) {
+            target.put(key, resolvedValue);
+        }
+    }
+
+    private String firstNonBlank(Object first, Object second) {
+        String firstValue = first == null ? null : String.valueOf(first);
+        if (StringUtils.isNotBlank(firstValue)) {
+            return firstValue;
+        }
+        return second == null ? null : String.valueOf(second);
     }
 }

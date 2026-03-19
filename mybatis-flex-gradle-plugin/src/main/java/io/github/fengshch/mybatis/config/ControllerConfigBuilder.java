@@ -2,13 +2,11 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.ControllerConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *  Config controller config
  */
-@Data
 public class ControllerConfigBuilder {
 
     /**
@@ -50,6 +48,62 @@ public class ControllerConfigBuilder {
      * 生成 REST 风格的 Controller。
      */
     private boolean restStyle = true;
+
+    public String getSourceDir() {
+        return sourceDir;
+    }
+
+    public void setSourceDir(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
+
+    public String getRequestMappingPrefix() {
+        return requestMappingPrefix;
+    }
+
+    public void setRequestMappingPrefix(String requestMappingPrefix) {
+        this.requestMappingPrefix = requestMappingPrefix;
+    }
+
+    public String getClassPrefix() {
+        return classPrefix;
+    }
+
+    public void setClassPrefix(String classPrefix) {
+        this.classPrefix = classPrefix;
+    }
+
+    public String getClassSuffix() {
+        return classSuffix;
+    }
+
+    public void setClassSuffix(String classSuffix) {
+        this.classSuffix = classSuffix;
+    }
+
+    public String getSuperClass() {
+        return superClass;
+    }
+
+    public void setSuperClass(String superClass) {
+        this.superClass = superClass;
+    }
+
+    public boolean isOverwriteEnable() {
+        return overwriteEnable;
+    }
+
+    public void setOverwriteEnable(boolean overwriteEnable) {
+        this.overwriteEnable = overwriteEnable;
+    }
+
+    public boolean isRestStyle() {
+        return restStyle;
+    }
+
+    public void setRestStyle(boolean restStyle) {
+        this.restStyle = restStyle;
+    }
 
     /**
      * Builds and configures the controller configuration in the global config.

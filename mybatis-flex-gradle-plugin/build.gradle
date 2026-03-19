@@ -43,14 +43,6 @@ dependencies {
 
     implementation(libs.commonsLang3)
 
-    compileOnly(libs.lombok)
-
-    testCompileOnly(libs.lombok)
-
-    annotationProcessor(libs.lombok)
-
-    testAnnotationProcessor(libs.lombok)
-
     testImplementation(libs.h2)
 
     testImplementation(libs.junitJupiter)
@@ -63,7 +55,7 @@ gradlePlugin {
     vcsUrl = 'https://github.com/fengshch/mybatis-flex-gradle.git'
 
     plugins {
-        myPlugin {
+        batis {
             id = 'io.github.fengshch.mybatis-flex-gradle-plugin'
             implementationClass = 'io.github.fengshch.mybatis.MyBatisFlexGradlePlugin'
             displayName = 'MyBatis Flex Gradle Plugin'
@@ -76,10 +68,10 @@ gradlePlugin {
 publishing {
     repositories {
         maven {
-            name = "maven-release"
+            name = "Nexus"
             def releasesRepoUrl = uri(findProperty("NexusReleasesRepoUrl") ?: System.getenv("NEXUS_RELEASES_REPO_URL") ?: "")
             def snapshotsRepoUrl = uri(findProperty("NexusSnapshotsRepoUrl") ?: System.getenv("NEXUS_SNAPSHOTS_REPO_URL") ?: "")
-            def isSnapshot = project.version?.toString()?.endsWith("SNAPSHOT") ?: false
+            def isSnapshot = project.version?.toString()?.endsWith("-SNAPSHOT") ?: false
             url = isSnapshot ? snapshotsRepoUrl : releasesRepoUrl
             allowInsecureProtocol=true
 
@@ -94,6 +86,10 @@ publishing {
 tasks.named("test"){
     useJUnitPlatform()
     failOnNoDiscoveredTests=false
+}
+
+tasks.named("javadoc", Javadoc) {
+    options.addStringOption("Xdoclint:all,-missing", "-quiet")
 }
 
 

@@ -4,3 +4,18 @@ spring:
     username: sa
     password: password
     driverClassName: org.h2.Driver
+
+mybatis-flex:
+  mapper-locations: classpath:com/example/persistents/mapper/xml/**/*.xml
+  type-aliases-package: com.example.persistents.po
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+mybatis:
+  mapper-locations: classpath:com/example/persistents/mapper/xml/**/*.xml
+  type-aliases-package: com.example.persistents.po
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+

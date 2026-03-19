@@ -5,7 +5,6 @@ hikariCPVer = "7.0.2"
 snakeyamlVer = "2.5"
 freemarkerVer = "2.3.34"
 commonsLang3Ver = "3.20.0"
-lombokVer = "1.18.42"
 junitJupiterVer = "6.0.3"
 junitPlatformLauncherVer = "6.0.3"
 flywayVer = "12.0.2"
@@ -26,7 +25,6 @@ hikariCP = {group = "com.zaxxer", name="HikariCP", version.ref="hikariCPVer"}
 snakeyaml = {group = "org.yaml", name="snakeyaml", version.ref="snakeyamlVer"}
 freemarker = {group = "org.freemarker", name="freemarker", version.ref="freemarkerVer"}
 commonsLang3 = {group = "org.apache.commons", name="commons-lang3", version.ref="commonsLang3Ver"}
-lombok = {group = "org.projectlombok", name="lombok", version.ref="lombokVer"}
 junitJupiter = {group = "org.junit.jupiter", name="junit-jupiter", version.ref="junitJupiterVer"}
 junitPlatformLauncher = {group = "org.junit.platform", name="junit-platform-launcher", version.ref="junitPlatformLauncherVer"}
 flywayMysql = {group = "org.flywaydb", name="flyway-mysql", version.ref="flywayVer"}

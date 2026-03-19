@@ -2,10 +2,7 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.EntityConfig;
 import com.mybatisflex.codegen.config.GlobalConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-
-import java.io.Serializable;
 
 /**
  * Builder class for configuring Entity code generation settings.
@@ -17,7 +14,6 @@ import java.io.Serializable;
  * @see GlobalConfigBuilder
  * @see EntityConfig
  */
-@Data
 public class EntityConfigBuilder {
 
     /**
@@ -129,6 +125,174 @@ public class EntityConfigBuilder {
      * 继承的父类是否添加泛型
      */
     private boolean superClassGenericity = false;
+
+    public String getSourceDir() {
+        return sourceDir;
+    }
+
+    public void setSourceDir(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
+
+    public String getClassPrefix() {
+        return classPrefix;
+    }
+
+    public void setClassPrefix(String classPrefix) {
+        this.classPrefix = classPrefix;
+    }
+
+    public String getClassSuffix() {
+        return classSuffix;
+    }
+
+    public void setClassSuffix(String classSuffix) {
+        this.classSuffix = classSuffix;
+    }
+
+    public String getSuperClass() {
+        return superClass;
+    }
+
+    public void setSuperClass(String superClass) {
+        this.superClass = superClass;
+    }
+
+    public boolean isOverwriteEnable() {
+        return overwriteEnable;
+    }
+
+    public void setOverwriteEnable(boolean overwriteEnable) {
+        this.overwriteEnable = overwriteEnable;
+    }
+
+    public boolean isBaseOverwriteEnable() {
+        return baseOverwriteEnable;
+    }
+
+    public void setBaseOverwriteEnable(boolean baseOverwriteEnable) {
+        this.baseOverwriteEnable = baseOverwriteEnable;
+    }
+
+    public String getImplInterfaces() {
+        return implInterfaces;
+    }
+
+    public void setImplInterfaces(String implInterfaces) {
+        this.implInterfaces = implInterfaces;
+    }
+
+    public boolean isWithLombok() {
+        return withLombok;
+    }
+
+    public void setWithLombok(boolean withLombok) {
+        this.withLombok = withLombok;
+    }
+
+    public boolean isLombokNoArgsConstructorEnable() {
+        return lombokNoArgsConstructorEnable;
+    }
+
+    public void setLombokNoArgsConstructorEnable(boolean lombokNoArgsConstructorEnable) {
+        this.lombokNoArgsConstructorEnable = lombokNoArgsConstructorEnable;
+    }
+
+    public boolean isLombokAllArgsConstructorEnable() {
+        return lombokAllArgsConstructorEnable;
+    }
+
+    public void setLombokAllArgsConstructorEnable(boolean lombokAllArgsConstructorEnable) {
+        this.lombokAllArgsConstructorEnable = lombokAllArgsConstructorEnable;
+    }
+
+    public boolean isWithSwagger() {
+        return withSwagger;
+    }
+
+    public void setWithSwagger(boolean withSwagger) {
+        this.withSwagger = withSwagger;
+    }
+
+    public String getSwaggerVersion() {
+        return swaggerVersion;
+    }
+
+    public void setSwaggerVersion(String swaggerVersion) {
+        this.swaggerVersion = swaggerVersion;
+    }
+
+    public boolean isWithActiveRecord() {
+        return withActiveRecord;
+    }
+
+    public void setWithActiveRecord(boolean withActiveRecord) {
+        this.withActiveRecord = withActiveRecord;
+    }
+
+    public String getDataSource() {
+        return dataSource;
+    }
+
+    public void setDataSource(String dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public int getJdkVersion() {
+        return jdkVersion;
+    }
+
+    public void setJdkVersion(int jdkVersion) {
+        this.jdkVersion = jdkVersion;
+    }
+
+    public boolean isWithBaseClassEnable() {
+        return withBaseClassEnable;
+    }
+
+    public void setWithBaseClassEnable(boolean withBaseClassEnable) {
+        this.withBaseClassEnable = withBaseClassEnable;
+    }
+
+    public String getWithBaseClassSuffix() {
+        return withBaseClassSuffix;
+    }
+
+    public void setWithBaseClassSuffix(String withBaseClassSuffix) {
+        this.withBaseClassSuffix = withBaseClassSuffix;
+    }
+
+    public String getWithBasePackage() {
+        return withBasePackage;
+    }
+
+    public void setWithBasePackage(String withBasePackage) {
+        this.withBasePackage = withBasePackage;
+    }
+
+    public boolean isColumnCommentEnable() {
+        return columnCommentEnable;
+    }
+
+    public void setColumnCommentEnable(boolean columnCommentEnable) {
+        this.columnCommentEnable = columnCommentEnable;
+    }
+
+    public boolean isAlwaysGenColumnAnnotation() {
+        return alwaysGenColumnAnnotation;
+    }
+
+    public void setAlwaysGenColumnAnnotation(boolean alwaysGenColumnAnnotation) {
+        this.alwaysGenColumnAnnotation = alwaysGenColumnAnnotation;
+    }
+
+    public boolean isSuperClassGenericity() {
+        return superClassGenericity;
+    }
+
+    public void setSuperClassGenericity(boolean superClassGenericity) {
+        this.superClassGenericity = superClassGenericity;
+    }
 
     /**
      * Builds and applies the entity configuration to the global config.

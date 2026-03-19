@@ -1,7 +1,6 @@
 package io.github.fengshch.mybatis.ext;
 
 import io.github.fengshch.mybatis.config.GlobalConfigBuilder;
-import lombok.Getter;
 import org.gradle.api.NamedDomainObjectContainer;
 import org.gradle.api.model.ObjectFactory;
 
@@ -17,7 +16,6 @@ import javax.inject.Inject;
  * @see GlobalConfigBuilder
  * @see NamedDomainObjectContainer
  */
-@Getter
 public class MyBatisExtension {
     private final NamedDomainObjectContainer<GlobalConfigBuilder> configurations;
 
@@ -29,5 +27,9 @@ public class MyBatisExtension {
     @Inject
     public MyBatisExtension(ObjectFactory objectFactory) {
         configurations = objectFactory.domainObjectContainer(GlobalConfigBuilder.class, name -> objectFactory.newInstance(GlobalConfigBuilder.class, name));
+    }
+
+    public NamedDomainObjectContainer<GlobalConfigBuilder> getConfigurations() {
+        return configurations;
     }
 }

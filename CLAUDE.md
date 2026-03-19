@@ -21,6 +21,9 @@ gradle :mybatis-flex-gradle-plugin:build
 # Publish to local Maven repository
 gradle :mybatis-flex-gradle-plugin:publishToMavenLocal
 
+# Publish To Nexus Maven Repository
+gradle :mybatis-flex-gradle-plugin:publishPluginMavenPublicationToNexus-releaseRepository    
+
 # Run tests
 gradle :mybatis-flex-gradle-plugin:test
 ```

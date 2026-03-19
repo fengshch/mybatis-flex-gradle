@@ -2,7 +2,6 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.ServiceConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
  * @see GlobalConfigBuilder
  * @see ServiceConfig
  */
-@Data
 public class ServiceConfigBuilder {
     /**
      * Constructs a new {@code ServiceConfigBuilder} with default settings.
@@ -46,6 +44,46 @@ public class ServiceConfigBuilder {
      * 是否覆盖之前生成的文件。
      */
     private boolean overwriteEnable = false;
+
+    public String getSourceDir() {
+        return sourceDir;
+    }
+
+    public void setSourceDir(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
+
+    public String getClassPrefix() {
+        return classPrefix;
+    }
+
+    public void setClassPrefix(String classPrefix) {
+        this.classPrefix = classPrefix;
+    }
+
+    public String getClassSuffix() {
+        return classSuffix;
+    }
+
+    public void setClassSuffix(String classSuffix) {
+        this.classSuffix = classSuffix;
+    }
+
+    public String getSuperClass() {
+        return superClass;
+    }
+
+    public void setSuperClass(String superClass) {
+        this.superClass = superClass;
+    }
+
+    public boolean isOverwriteEnable() {
+        return overwriteEnable;
+    }
+
+    public void setOverwriteEnable(boolean overwriteEnable) {
+        this.overwriteEnable = overwriteEnable;
+    }
 
     /**
      * Builds and applies the service configuration to the global config.

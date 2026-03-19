@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.tasks.TaskAction;
 import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NonNull;
 
 import javax.inject.Inject;
 import java.io.File;
@@ -25,7 +26,7 @@ import java.util.Comparator;
 
 /**
  * Gradle task for executing MyBatis Flex code generation.
- *
+ * <p>
  * This task performs the actual code generation based on the database schema and the
  * configuration provided by {@link GlobalConfigBuilder}. It connects to the database,
  * introspects the schema, and generates entity, mapper, service, and other related classes.
@@ -50,10 +51,21 @@ public class MyBatisGenerateTask extends DefaultTask {
 
     @TaskAction
     void generate() throws ClassNotFoundException, IOException {
+        getLogger().lifecycle("Starting MyBatis Flex generation for task {}", getPath());
+
         // Clean the batis directory before generation
         cleanBatisDirectory();
 
         HikariDataSource dataSource = getDataSource();
+        Generator generator = getGenerator(dataSource);
+        JdbcTypeMapping.registerMapping(Timestamp.class, LocalDateTime.class);
+        generator.generate();
+        dataSource.close();
+
+        getLogger().lifecycle("MyBatis Flex generation finished for task {}", getPath());
+    }
+
+    private @NonNull Generator getGenerator(HikariDataSource dataSource) throws ClassNotFoundException {
         GlobalConfig globalConfig = getGlobalConfig();
         IDialect iDialect = switch (dataSource.getDriverClassName()) {
             case "org.postgresql.Driver" -> IDialect.POSTGRESQL;
@@ -62,10 +74,7 @@ public class MyBatisGenerateTask extends DefaultTask {
             case "org.sqlite.JDBC" -> IDialect.SQLITE;
             default -> IDialect.DEFAULT;
         };
-        Generator generator = new Generator(dataSource, globalConfig, iDialect);
-        JdbcTypeMapping.registerMapping(Timestamp.class, LocalDateTime.class);
-        generator.generate();
-        dataSource.close();
+        return new Generator(dataSource, globalConfig, iDialect);
     }
 
     /**
@@ -73,15 +82,26 @@ public class MyBatisGenerateTask extends DefaultTask {
      * This method deletes the configured source directory if it exists.
      */
     private void cleanBatisDirectory() throws IOException {
-        String sourceDir = globalConfigBuilder.getPackageConfigBuilder().getSourceDir();
+        String sourceDir = globalConfigBuilder.getPackageConfigBuilder().getResolvedSourceDir();
         if (StringUtils.isBlank(sourceDir)) {
             return;
         }
 
-        File batisDir = new File(getProject().getProjectDir(), sourceDir);
-        if (batisDir.exists() && batisDir.isDirectory()) {
-            getLogger().lifecycle("Cleaning batis directory: {}", batisDir.getAbsolutePath());
-            deleteDirectory(batisDir);
+        getLogger().lifecycle("Configured source directory: {}", sourceDir);
+
+        File fileDir = new File(sourceDir);
+        if (sourceDir.endsWith("src/main/java")) {
+            String packageDir = globalConfigBuilder.getPackageConfigBuilder().getBasePackage();
+            String packagePath = packageDir.replace(".", File.separator);
+            fileDir = new File(sourceDir, packagePath);
+            getLogger().lifecycle("Configured base package: {}", packageDir);
+            getLogger().lifecycle("Resolved package directory: {}", packagePath);
+//            fileDir = new File(fileDir.toURI());
+        }
+        getLogger().lifecycle("Resolved generation target directory: {}", fileDir.getAbsolutePath());
+        if (fileDir.exists() && fileDir.isDirectory()) {
+            getLogger().lifecycle("Cleaning batis directory: {}", fileDir.getAbsolutePath());
+            deleteDirectory(fileDir);
             getLogger().lifecycle("Batis directory cleaned successfully");
         }
     }
@@ -118,7 +138,7 @@ public class MyBatisGenerateTask extends DefaultTask {
         GlobalConfig globalConfig = getConfig();
 
         globalConfigBuilder.getJavadocConfigBuilder().build(globalConfig);
-        globalConfigBuilder.getPackageConfigBuilder().build(this.getProject(), globalConfig);
+        globalConfigBuilder.getPackageConfigBuilder().build(globalConfig);
         globalConfigBuilder.getStrategyConfigBuilder().build(globalConfig);
 
 //        if (globalConfigBuilder.getTemplateConfig() != null) {

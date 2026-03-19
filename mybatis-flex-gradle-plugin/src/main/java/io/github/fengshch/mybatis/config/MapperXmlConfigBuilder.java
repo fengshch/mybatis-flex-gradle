@@ -2,7 +2,6 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.MapperXmlConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
  * @see GlobalConfigBuilder
  * @see MapperXmlConfig
  */
-@Data
 public class MapperXmlConfigBuilder {
     /**
      * Constructs a new {@code MapperXmlConfigBuilder} with default settings.
@@ -36,6 +34,30 @@ public class MapperXmlConfigBuilder {
      * 是否覆盖之前生成的文件。
      */
     private boolean overwriteEnable = true;
+
+    public String getFilePrefix() {
+        return filePrefix;
+    }
+
+    public void setFilePrefix(String filePrefix) {
+        this.filePrefix = filePrefix;
+    }
+
+    public String getFileSuffix() {
+        return fileSuffix;
+    }
+
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix;
+    }
+
+    public boolean isOverwriteEnable() {
+        return overwriteEnable;
+    }
+
+    public void setOverwriteEnable(boolean overwriteEnable) {
+        this.overwriteEnable = overwriteEnable;
+    }
 
     /**
      * Builds and applies the mapper XML configuration to the global config.

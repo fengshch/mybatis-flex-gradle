@@ -46,8 +46,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation(libs.mybatisFlexSpringBootStarter)
-   {
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation(libs.mybatisFlexSpringBootStarter) {
         exclude group: 'org.mybatis', module: 'mybatis-spring'
     }
     implementation(libs.mybatisSpring)

@@ -386,6 +386,10 @@ gradle :mybatis-flex-gradle-plugin:test
 
 # Publish to local Maven repository
 gradle :mybatis-flex-gradle-plugin:publishToMavenLocal
+
+
+# Publish to local Nexus repository
+gradle :mybatis-flex-gradle-plugin:publishPluginMavenPublicationToNexusRepository    
 ```
 
 ## Requirements

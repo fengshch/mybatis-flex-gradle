@@ -2,7 +2,6 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.TableDefConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
  * @see GlobalConfigBuilder
  * @see TableDefConfig
  */
-@Data
 public class TableDefConfigBuilder {
 
     /**
@@ -51,6 +49,54 @@ public class TableDefConfigBuilder {
      * 生成辅助类的引用常量名后缀。
      */
     private String instanceSuffix = "";
+
+    public String getSourceDir() {
+        return sourceDir;
+    }
+
+    public void setSourceDir(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
+
+    public String getClassPrefix() {
+        return classPrefix;
+    }
+
+    public void setClassPrefix(String classPrefix) {
+        this.classPrefix = classPrefix;
+    }
+
+    public String getClassSuffix() {
+        return classSuffix;
+    }
+
+    public void setClassSuffix(String classSuffix) {
+        this.classSuffix = classSuffix;
+    }
+
+    public boolean isOverwriteEnable() {
+        return overwriteEnable;
+    }
+
+    public void setOverwriteEnable(boolean overwriteEnable) {
+        this.overwriteEnable = overwriteEnable;
+    }
+
+    public String getPropertiesNameStyle() {
+        return propertiesNameStyle;
+    }
+
+    public void setPropertiesNameStyle(String propertiesNameStyle) {
+        this.propertiesNameStyle = propertiesNameStyle;
+    }
+
+    public String getInstanceSuffix() {
+        return instanceSuffix;
+    }
+
+    public void setInstanceSuffix(String instanceSuffix) {
+        this.instanceSuffix = instanceSuffix;
+    }
 
     /**
      * Builds and applies the table definition configuration to the global config.

@@ -3,11 +3,10 @@
  */
 package io.github.fengshch.mybatis;
 
+import io.github.fengshch.mybatis.config.DataSourceConfigBuilder;
 import io.github.fengshch.mybatis.ext.MyBatisExtension;
 import org.gradle.api.Project;
 import org.gradle.testfixtures.ProjectBuilder;
-import org.gradle.testkit.runner.BuildResult;
-import org.gradle.testkit.runner.GradleRunner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -15,8 +14,8 @@ import org.junit.jupiter.api.io.TempDir;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Map;
 
-import static org.gradle.testkit.runner.TaskOutcome.SUCCESS;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -77,5 +76,125 @@ class MyBatisFlexGradlePluginTest {
         // This test just verifies the plugin structure
         // Full integration tests would require setting up database connections
         assertTrue(true);
+    }
+
+    @Test
+    void testResolveDatasourceFallsBackToActiveApplicationYaml() throws IOException {
+        Project project = ProjectBuilder.builder().withProjectDir(testProjectDir).build();
+        MyBatisFlexGradlePlugin plugin = new MyBatisFlexGradlePlugin();
+
+        writeResource("src/main/resources/application.yml", """
+                spring:
+                  profiles:
+                    active: dev
+                """);
+        writeResource("src/main/resources/application-dev.yml", """
+                spring:
+                  datasource:
+                    url: jdbc:h2:file:./data/devdb
+                    username: dev_user
+                    password: dev_pass
+                    driverClassName: org.h2.Driver
+                """);
+        writeResource("src/main/resources/mybatis-flex.yml", """
+                mybatis-flex:
+                  configurations:
+                    main:
+                      packageConfig:
+                        basePackage: com.example.mybatis
+                """);
+
+        Map<String, String> datasource = plugin.resolveDatasource(project, "main", new DataSourceConfigBuilder());
+
+        assertEquals("jdbc:h2:file:" + testProjectDir.getAbsolutePath() + "/data/devdb", datasource.get("url"));
+        assertEquals("dev_user", datasource.get("username"));
+        assertEquals("dev_pass", datasource.get("password"));
+        assertEquals("org.h2.Driver", datasource.get("driverClassName"));
+    }
+
+    @Test
+    void testResolveDatasourceFallsBackToApplicationProperties() throws IOException {
+        Project project = ProjectBuilder.builder().withProjectDir(testProjectDir).build();
+        MyBatisFlexGradlePlugin plugin = new MyBatisFlexGradlePlugin();
+
+        writeResource("src/main/resources/application.properties", """
+                spring.datasource.url=jdbc:h2:mem:propsDb
+                spring.datasource.username=sa
+                spring.datasource.password=password
+                spring.datasource.driver-class-name=org.h2.Driver
+                """);
+        writeResource("src/main/resources/mybatis-flex.yml", """
+                mybatis-flex:
+                  configurations:
+                    main:
+                      packageConfig:
+                        basePackage: com.example.mybatis
+                """);
+
+        Map<String, String> datasource = plugin.resolveDatasource(project, "main", new DataSourceConfigBuilder());
+
+        assertEquals("jdbc:h2:mem:propsDb", datasource.get("url"));
+        assertEquals("sa", datasource.get("username"));
+        assertEquals("password", datasource.get("password"));
+        assertEquals("org.h2.Driver", datasource.get("driverClassName"));
+    }
+
+    @Test
+    void testResolveDatasourceKeepsDslValuesAndFillsMissingFields() throws IOException {
+        Project project = ProjectBuilder.builder().withProjectDir(testProjectDir).build();
+        MyBatisFlexGradlePlugin plugin = new MyBatisFlexGradlePlugin();
+        DataSourceConfigBuilder builder = new DataSourceConfigBuilder();
+        builder.setUrl("jdbc:h2:mem:dslDb");
+        builder.setUsername("dsl_user");
+
+        writeResource("src/main/resources/application.yml", """
+                spring:
+                  datasource:
+                    url: jdbc:h2:mem:appDb
+                    username: app_user
+                    password: app_pass
+                    driverClassName: org.h2.Driver
+                """);
+
+        Map<String, String> datasource = plugin.resolveDatasource(project, "main", builder);
+
+        assertEquals("jdbc:h2:mem:dslDb", datasource.get("url"));
+        assertEquals("dsl_user", datasource.get("username"));
+        assertEquals("app_pass", datasource.get("password"));
+        assertEquals("org.h2.Driver", datasource.get("driverClassName"));
+    }
+
+    @Test
+    void testResolveDatasourceSupportsNamedConfigurationFromApplicationYaml() throws IOException {
+        Project project = ProjectBuilder.builder().withProjectDir(testProjectDir).build();
+        MyBatisFlexGradlePlugin plugin = new MyBatisFlexGradlePlugin();
+
+        writeResource("src/main/resources/application.yml", """
+                spring:
+                  datasource:
+                    main:
+                      url: jdbc:h2:mem:mainDb
+                      username: main_user
+                      password: main_pass
+                      driverClassName: org.h2.Driver
+                    secondary:
+                      url: jdbc:h2:mem:secondaryDb
+                      username: secondary_user
+                      password: secondary_pass
+                      driverClassName: org.h2.Driver
+                """);
+
+        Map<String, String> datasource = plugin.resolveDatasource(project, "secondary", new DataSourceConfigBuilder());
+
+        assertEquals("jdbc:h2:mem:secondaryDb", datasource.get("url"));
+        assertEquals("secondary_user", datasource.get("username"));
+        assertEquals("secondary_pass", datasource.get("password"));
+        assertEquals("org.h2.Driver", datasource.get("driverClassName"));
+    }
+
+    private void writeResource(String relativePath, String content) throws IOException {
+        File file = new File(testProjectDir, relativePath);
+        Files.createDirectories(file.getParentFile().toPath());
+        Files.writeString(file.toPath(), content);
     }
 }

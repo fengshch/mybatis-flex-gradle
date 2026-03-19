@@ -2,9 +2,7 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.PackageConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
-import org.gradle.api.Project;
 
 /**
  * Builder class for configuring package paths and naming conventions.
@@ -16,7 +14,6 @@ import org.gradle.api.Project;
  * @see GlobalConfigBuilder
  * @see PackageConfig
  */
-@Data
 public class PackageConfigBuilder {
 
     /**
@@ -71,16 +68,99 @@ public class PackageConfigBuilder {
     private String mapperXmlPath;// = "src/batis/resources/mapper";
 
     /**
+     * Captured at configuration time to keep task execution configuration-cache safe.
+     */
+    private String projectDir;
+
+    public String getSourceDir() {
+        return sourceDir;
+    }
+
+    public void setSourceDir(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
+
+    public String getBasePackage() {
+        return basePackage;
+    }
+
+    public void setBasePackage(String basePackage) {
+        this.basePackage = basePackage;
+    }
+
+    public String getEntityPackage() {
+        return entityPackage;
+    }
+
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
+    }
+
+    public String getMapperPackage() {
+        return mapperPackage;
+    }
+
+    public void setMapperPackage(String mapperPackage) {
+        this.mapperPackage = mapperPackage;
+    }
+
+    public String getServicePackage() {
+        return servicePackage;
+    }
+
+    public void setServicePackage(String servicePackage) {
+        this.servicePackage = servicePackage;
+    }
+
+    public String getServiceImplPackage() {
+        return serviceImplPackage;
+    }
+
+    public void setServiceImplPackage(String serviceImplPackage) {
+        this.serviceImplPackage = serviceImplPackage;
+    }
+
+    public String getControllerPackage() {
+        return controllerPackage;
+    }
+
+    public void setControllerPackage(String controllerPackage) {
+        this.controllerPackage = controllerPackage;
+    }
+
+    public String getTableDefPackage() {
+        return tableDefPackage;
+    }
+
+    public void setTableDefPackage(String tableDefPackage) {
+        this.tableDefPackage = tableDefPackage;
+    }
+
+    public String getMapperXmlPath() {
+        return mapperXmlPath;
+    }
+
+    public void setMapperXmlPath(String mapperXmlPath) {
+        this.mapperXmlPath = mapperXmlPath;
+    }
+
+    public String getProjectDir() {
+        return projectDir;
+    }
+
+    public void setProjectDir(String projectDir) {
+        this.projectDir = projectDir;
+    }
+
+    /**
      * Builds and applies the package configuration to the global config.
      *
-     * @param project the Gradle {@link Project} for resolving paths
      * @param globalConfig the {@link GlobalConfig} to update with package settings
      */
-    public void build(Project project, GlobalConfig globalConfig) {
+    public void build(GlobalConfig globalConfig) {
         PackageConfig packageConfig = globalConfig.getPackageConfig();
         if (StringUtils.isNotBlank(sourceDir)){
-            String projectDir = project.getProjectDir().getAbsolutePath();
-            String path = projectDir +"/" + sourceDir;
+            String path = resolveProjectPath(sourceDir);
             packageConfig.setSourceDir(path);
         }
         if (StringUtils.isNotBlank(basePackage))
@@ -98,14 +178,33 @@ public class PackageConfigBuilder {
         if (StringUtils.isNotBlank(tableDefPackage))
             packageConfig.setTableDefPackage(basePackage + "." + tableDefPackage);
         if (StringUtils.isNotBlank(mapperXmlPath)){
-            String path = project.getProjectDir().getAbsolutePath() + "/" + mapperXmlPath;
+            String path = resolveProjectPath(mapperXmlPath);
             packageConfig.setMapperXmlPath(path);
         }else{
             if(StringUtils.isBlank(mapperPackage )){
                 mapperPackage = "mapper";
             }
-            String path = project.getProjectDir().getAbsolutePath() + "/"+ sourceDir +  "/" + basePackage.replace(".", "/") + "/" + mapperPackage + "/xml";
+            String path = resolveProjectPath(sourceDir + "/" + basePackage.replace(".", "/") + "/" + mapperPackage + "/xml");
             packageConfig.setMapperXmlPath(path);
         }
+    }
+
+    /**
+     * Resolves the configured source directory against the captured project directory.
+     *
+     * @return the absolute source directory path, or {@code null} when no source directory is configured
+     */
+    public String getResolvedSourceDir() {
+        if (StringUtils.isBlank(sourceDir)) {
+            return null;
+        }
+        return resolveProjectPath(sourceDir);
+    }
+
+    private String resolveProjectPath(String path) {
+        if (StringUtils.isBlank(projectDir)) {
+            return path;
+        }
+        return projectDir + "/" + path;
     }
 }

@@ -1,8 +1,6 @@
 package io.github.fengshch.mybatis.config;
 
 import groovy.lang.Closure;
-import lombok.Getter;
-import lombok.Setter;
 import org.flywaydb.gradle.FlywayExtension;
 
 import javax.inject.Inject;
@@ -20,8 +18,6 @@ import javax.inject.Inject;
  * @see MapperConfigBuilder
  * @see ServiceConfigBuilder
  */
-@Getter
-@Setter
 public class GlobalConfigBuilder {
 
     private final String name;
@@ -76,6 +72,94 @@ public class GlobalConfigBuilder {
         flywayExtension = new FlywayExtension();
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public boolean isEntityGenerateEnable() {
+        return entityGenerateEnable;
+    }
+
+    public void setEntityGenerateEnable(boolean entityGenerateEnable) {
+        this.entityGenerateEnable = entityGenerateEnable;
+    }
+
+    public boolean isMapperGenerateEnable() {
+        return mapperGenerateEnable;
+    }
+
+    public void setMapperGenerateEnable(boolean mapperGenerateEnable) {
+        this.mapperGenerateEnable = mapperGenerateEnable;
+    }
+
+    public boolean isServiceGenerateEnable() {
+        return serviceGenerateEnable;
+    }
+
+    public void setServiceGenerateEnable(boolean serviceGenerateEnable) {
+        this.serviceGenerateEnable = serviceGenerateEnable;
+    }
+
+    public boolean isServiceImplGenerateEnable() {
+        return serviceImplGenerateEnable;
+    }
+
+    public void setServiceImplGenerateEnable(boolean serviceImplGenerateEnable) {
+        this.serviceImplGenerateEnable = serviceImplGenerateEnable;
+    }
+
+    public boolean isControllerGenerateEnable() {
+        return controllerGenerateEnable;
+    }
+
+    public void setControllerGenerateEnable(boolean controllerGenerateEnable) {
+        this.controllerGenerateEnable = controllerGenerateEnable;
+    }
+
+    public boolean isTableDefGenerateEnable() {
+        return tableDefGenerateEnable;
+    }
+
+    public void setTableDefGenerateEnable(boolean tableDefGenerateEnable) {
+        this.tableDefGenerateEnable = tableDefGenerateEnable;
+    }
+
+    public boolean isMapperXmlGenerateEnable() {
+        return mapperXmlGenerateEnable;
+    }
+
+    public void setMapperXmlGenerateEnable(boolean mapperXmlGenerateEnable) {
+        this.mapperXmlGenerateEnable = mapperXmlGenerateEnable;
+    }
+
+    public boolean isPackageInfoGenerateEnable() {
+        return packageInfoGenerateEnable;
+    }
+
+    public void setPackageInfoGenerateEnable(boolean packageInfoGenerateEnable) {
+        this.packageInfoGenerateEnable = packageInfoGenerateEnable;
+    }
+
+    public DataSourceConfigBuilder getDataSourceConfigBuilder() {
+        return dataSourceConfigBuilder;
+    }
+
+    public JavadocConfigBuilder getJavadocConfigBuilder() {
+        return javadocConfigBuilder;
+    }
+
+    public PackageConfigBuilder getPackageConfigBuilder() {
+        return packageConfigBuilder;
+    }
+
+    public StrategyConfigBuilder getStrategyConfigBuilder() {
+        return strategyConfigBuilder;
+    }
+
+    public TemplateConfigBuilder getTemplateConfigBuilder() {
+        return templateConfigBuilder;
+    }
+
     /**
      * Configures Flyway database migration settings using a Closure.
      *
@@ -106,6 +190,38 @@ public class GlobalConfigBuilder {
             flywayExtension.password = dataSourceConfigBuilder.getPassword();
         }
         return flywayExtension;
+    }
+
+    public EntityConfigBuilder getEntityConfigBuilder() {
+        return entityConfigBuilder;
+    }
+
+    public MapperConfigBuilder getMapperConfigBuilder() {
+        return mapperConfigBuilder;
+    }
+
+    public ServiceConfigBuilder getServiceConfigBuilder() {
+        return serviceConfigBuilder;
+    }
+
+    public ServiceImplConfigBuilder getServiceImplConfigBuilder() {
+        return serviceImplConfigBuilder;
+    }
+
+    public ControllerConfigBuilder getControllerConfigBuilder() {
+        return controllerConfigBuilder;
+    }
+
+    public TableConfigBuilder getTableConfigBuilder() {
+        return tableConfigBuilder;
+    }
+
+    public TableDefConfigBuilder getTableDefConfigBuilder() {
+        return tableDefConfigBuilder;
+    }
+
+    public MapperXmlConfigBuilder getMapperXmlConfigBuilder() {
+        return mapperXmlConfigBuilder;
     }
 
     /**

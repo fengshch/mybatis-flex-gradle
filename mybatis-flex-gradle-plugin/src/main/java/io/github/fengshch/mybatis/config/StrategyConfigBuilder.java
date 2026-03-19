@@ -1,10 +1,9 @@
 package io.github.fengshch.mybatis.config;
 
-import com.mybatisflex.codegen.config.*;
-import lombok.Data;
+import com.mybatisflex.codegen.config.GlobalConfig;
+import com.mybatisflex.codegen.config.StrategyConfig;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,7 +15,6 @@ import java.util.Set;
  * @see GlobalConfigBuilder
  * @see StrategyConfig
  */
-@Data
 public class StrategyConfigBuilder {
     /**
      * Constructs a new {@code StrategyConfigBuilder} with default settings.
@@ -84,6 +82,78 @@ public class StrategyConfigBuilder {
      * 需要忽略的列 全局配置。
      */
     private String[] ignoreColumns;
+
+    public String getTablePrefix() {
+        return tablePrefix;
+    }
+
+    public void setTablePrefix(String tablePrefix) {
+        this.tablePrefix = tablePrefix;
+    }
+
+    public String getTableSuffix() {
+        return tableSuffix;
+    }
+
+    public void setTableSuffix(String tableSuffix) {
+        this.tableSuffix = tableSuffix;
+    }
+
+    public String getLogicDeleteColumn() {
+        return logicDeleteColumn;
+    }
+
+    public void setLogicDeleteColumn(String logicDeleteColumn) {
+        this.logicDeleteColumn = logicDeleteColumn;
+    }
+
+    public String getVersionColumn() {
+        return versionColumn;
+    }
+
+    public void setVersionColumn(String versionColumn) {
+        this.versionColumn = versionColumn;
+    }
+
+    public boolean isGenerateForView() {
+        return generateForView;
+    }
+
+    public void setGenerateForView(boolean generateForView) {
+        this.generateForView = generateForView;
+    }
+
+    public String getGenerateSchema() {
+        return generateSchema;
+    }
+
+    public void setGenerateSchema(String generateSchema) {
+        this.generateSchema = generateSchema;
+    }
+
+    public String[] getGenerateTables() {
+        return generateTables;
+    }
+
+    public void setGenerateTables(String[] generateTables) {
+        this.generateTables = generateTables;
+    }
+
+    public String[] getUnGenerateTables() {
+        return unGenerateTables;
+    }
+
+    public void setUnGenerateTables(String[] unGenerateTables) {
+        this.unGenerateTables = unGenerateTables;
+    }
+
+    public String[] getIgnoreColumns() {
+        return ignoreColumns;
+    }
+
+    public void setIgnoreColumns(String[] ignoreColumns) {
+        this.ignoreColumns = ignoreColumns;
+    }
 
 
 

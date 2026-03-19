@@ -2,7 +2,6 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.MapperConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -14,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
  * @see GlobalConfigBuilder
  * @see MapperConfig
  */
-@Data
 public class MapperConfigBuilder {
 
     /**
@@ -51,6 +49,54 @@ public class MapperConfigBuilder {
      * 是否添加 {@code @Mapper} 注解。
      */
     private boolean mapperAnnotation = true;
+
+    public String getSourceDir() {
+        return sourceDir;
+    }
+
+    public void setSourceDir(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
+
+    public String getClassPrefix() {
+        return classPrefix;
+    }
+
+    public void setClassPrefix(String classPrefix) {
+        this.classPrefix = classPrefix;
+    }
+
+    public String getClassSuffix() {
+        return classSuffix;
+    }
+
+    public void setClassSuffix(String classSuffix) {
+        this.classSuffix = classSuffix;
+    }
+
+    public String getSuperClass() {
+        return superClass;
+    }
+
+    public void setSuperClass(String superClass) {
+        this.superClass = superClass;
+    }
+
+    public boolean isOverwriteEnable() {
+        return overwriteEnable;
+    }
+
+    public void setOverwriteEnable(boolean overwriteEnable) {
+        this.overwriteEnable = overwriteEnable;
+    }
+
+    public boolean isMapperAnnotation() {
+        return mapperAnnotation;
+    }
+
+    public void setMapperAnnotation(boolean mapperAnnotation) {
+        this.mapperAnnotation = mapperAnnotation;
+    }
 
     /**
      * Builds and applies the mapper configuration to the global config.

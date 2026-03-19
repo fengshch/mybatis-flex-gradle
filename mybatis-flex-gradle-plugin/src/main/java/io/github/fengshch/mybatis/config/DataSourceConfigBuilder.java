@@ -1,7 +1,5 @@
 package io.github.fengshch.mybatis.config;
 
-import lombok.Data;
-
 /**
  * Builder class for configuring database data source settings.
  *
@@ -11,7 +9,6 @@ import lombok.Data;
  *
  * @see GlobalConfigBuilder
  */
-@Data
 public class DataSourceConfigBuilder {
     /**
      * Constructs a new {@code DataSourceConfigBuilder} with default settings.
@@ -22,4 +19,36 @@ public class DataSourceConfigBuilder {
     private String username;
     private String password;
     private String driverClassName;
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getDriverClassName() {
+        return driverClassName;
+    }
+
+    public void setDriverClassName(String driverClassName) {
+        this.driverClassName = driverClassName;
+    }
 }

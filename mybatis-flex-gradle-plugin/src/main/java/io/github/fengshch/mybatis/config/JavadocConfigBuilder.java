@@ -2,7 +2,6 @@ package io.github.fengshch.mybatis.config;
 
 import com.mybatisflex.codegen.config.GlobalConfig;
 import com.mybatisflex.codegen.config.JavadocConfig;
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.UnaryOperator;
@@ -17,8 +16,19 @@ import java.util.function.UnaryOperator;
  * @see GlobalConfigBuilder
  * @see JavadocConfig
  */
-@Data
 public class JavadocConfigBuilder {
+    /**
+     * Gradle may serialize task state across classloaders, so avoid synthetic lambda defaults here.
+     */
+    private enum IdentityStringOperator implements UnaryOperator<String> {
+        INSTANCE;
+
+        @Override
+        public String apply(String value) {
+            return value;
+        }
+    }
+
     /**
      * Constructs a new {@code JavadocConfigBuilder} with default settings.
      */
@@ -38,12 +48,12 @@ public class JavadocConfigBuilder {
     /**
      * 表名格式化。
      */
-    private UnaryOperator<String> tableCommentFormat = UnaryOperator.identity();
+    private UnaryOperator<String> tableCommentFormat = IdentityStringOperator.INSTANCE;
 
     /**
      * 列名格式化。
      */
-    private UnaryOperator<String> columnCommentFormat = UnaryOperator.identity();
+    private UnaryOperator<String> columnCommentFormat = IdentityStringOperator.INSTANCE;
 
     /**
      * Entity 包注释。
@@ -74,6 +84,86 @@ public class JavadocConfigBuilder {
      * TableDef 包注释。
      */
     private String tableDefPackage = "表定义层（TableDef）软件包。";
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public String getSince() {
+        return since;
+    }
+
+    public void setSince(String since) {
+        this.since = since;
+    }
+
+    public UnaryOperator<String> getTableCommentFormat() {
+        return tableCommentFormat;
+    }
+
+    public void setTableCommentFormat(UnaryOperator<String> tableCommentFormat) {
+        this.tableCommentFormat = tableCommentFormat;
+    }
+
+    public UnaryOperator<String> getColumnCommentFormat() {
+        return columnCommentFormat;
+    }
+
+    public void setColumnCommentFormat(UnaryOperator<String> columnCommentFormat) {
+        this.columnCommentFormat = columnCommentFormat;
+    }
+
+    public String getEntityPackage() {
+        return entityPackage;
+    }
+
+    public void setEntityPackage(String entityPackage) {
+        this.entityPackage = entityPackage;
+    }
+
+    public String getMapperPackage() {
+        return mapperPackage;
+    }
+
+    public void setMapperPackage(String mapperPackage) {
+        this.mapperPackage = mapperPackage;
+    }
+
+    public String getServicePackage() {
+        return servicePackage;
+    }
+
+    public void setServicePackage(String servicePackage) {
+        this.servicePackage = servicePackage;
+    }
+
+    public String getServiceImplPackage() {
+        return serviceImplPackage;
+    }
+
+    public void setServiceImplPackage(String serviceImplPackage) {
+        this.serviceImplPackage = serviceImplPackage;
+    }
+
+    public String getControllerPackage() {
+        return controllerPackage;
+    }
+
+    public void setControllerPackage(String controllerPackage) {
+        this.controllerPackage = controllerPackage;
+    }
+
+    public String getTableDefPackage() {
+        return tableDefPackage;
+    }
+
+    public void setTableDefPackage(String tableDefPackage) {
+        this.tableDefPackage = tableDefPackage;
+    }
 
 
     /**

@@ -11,7 +11,7 @@ mybatis-flex:
       controllerGenerateEnable: true
       packageConfig:
         sourceDir: src/batis/java
-        basePackage: com.example.mybatis
+        basePackage: com.example.persistents
       strategyConfig:
         unGenerateTables:
           - flyway_schema_history
